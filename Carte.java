@@ -26,9 +26,9 @@ public class Carte
 
 	//get
 	public String getdeclencheur() { return this.declencheur;}
-	public String getnom        () { return this.nom;        }
-	public String gettype       () { return this.type;       }
-	public Effet geteffet      () { return this.effet;      }
-	public int    getcout       () { return this.cout;       }
+	public String getNom        () { return this.nom;        }
+	public String getType       () { return this.type;       }
+	public Effet  getEffet      () { return this.effet;      }
+	public int    getCout       () { return this.cout;       }
 
 }

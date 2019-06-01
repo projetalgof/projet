@@ -12,9 +12,23 @@ public class Banque
 		this.cartes.add(carte);
 	}
 
-	public void supprimer(Carte carte)
+	public Carte retirer(String nomCarte)
 	{
-		this.cartes.remove(carte);
+		Carte tmp =null;
+		for(Carte carte : cartes)
+		{
+			if(carte.getNom().equals(nomCarte))
+			{
+				tmp=carte ;
+				break;
+			}
+		}
+		if(tmp !=null)
+		{
+			this.cartes.remove(tmp);
+			return tmp ;
+		}
+		return null ;
 	}
 
 	public ArrayList<Carte> getListCartes() 

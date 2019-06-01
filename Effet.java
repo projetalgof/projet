@@ -1,7 +1,7 @@
 public class Effet
 {
 	private int piece ;
-	private String type; //  * pour tous , + que pour le joueur
+	private String type; //  couleur
 
 	public Effet(int piece, String type)
 	{

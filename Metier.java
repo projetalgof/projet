@@ -18,7 +18,6 @@ public class Metier
         {
         	this.joueurs.add(new Joueur(ctrl.creeJoueur()));
         }
-
         Regle.initialisation(joueurs,banque);
 
     }
@@ -27,17 +26,20 @@ public class Metier
     {
     	if(joueurActif== null)
     	{
+    		String joueurCommence=this.ctrl.commence();
     		for(Joueur joueur : this.joueurs)
     		{
-    			if(joueur.getNom().equals(this.ctrl.commence())) joueurActif=joueur;
+    			if(joueur.getNom().equals(joueurCommence)) joueurActif=joueur;
     		}
     	}
+    	this.ctrl.afficherBanque();
 
     }
 
     //get
     public boolean getIsEnd       () { return this.isEnd ;       }
     public Joueur  getJoueurActif () { return this.joueurActif ; }
+    public Banque  getBanque      () { return this.banque ;      }
     //retourn un copie de la list de joueur
     public ArrayList<Joueur> getJoueurs()
     {

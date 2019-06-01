@@ -5,8 +5,8 @@ public class Controleur
     
     public Controleur()
     {
-        this.metier = new Metier(this,2);
-        this.ihm    = new IHM(this) ;
+    	this.ihm    = new IHM(this) ;
+        this.metier = new Metier(this,this.ihm.debut());
 
         do
         	metier.jouer();
@@ -23,8 +23,13 @@ public class Controleur
 	{
 		return this.ihm.commence();
 	}
+	public void afficherBanque()
+	{
+		this.ihm.afficherBanque();
+	}
+	public Banque getBanque () { return this.metier.getBanque(); }
 
-
+	//main
     public static void main (String agrs[])
     {
     	new Controleur();
