@@ -19,6 +19,30 @@ public class Joueur
 		this.monuments= new Monument[4];
 		this.numJoueur = Joueur.nbJoueur++;
 	}
+	
+	public void maj(Joueur joueurActif)
+	{
+		for(Carte carte : this.listCartes)
+		{
+			if(((Joueur.jetDe+"").indexOf​(carte.getDeclencheur()) >= 0))
+			{
+				if      (carte.getDestination() == 'B') piece+= carte.getEffet().getPiece(this.listCartes);
+				else if (carte.getDestination() == 'J')
+				{
+					if (joueurActif.getPiece()-carte.getEffet().getPiece(this.listCartes) >=0 )
+					{
+						joueurActif.setPiece(-carte.getEffet().getPiece(this.listCartes))
+						this.pieces+=carte.getEffet().getPiece(this.listCartes);
+					}
+					else
+					{
+						this.pieces+=joueurActif.getPiece();
+						joueurActif.setPiece(-joueurActif.getPiece());
+					}
+				}
+			}
+		}
+	}
 
 	public void jetDe(int nbDe)
 	{

@@ -1,14 +1,34 @@
+import java.util.ArrayList;
 public class Effet
 {
-	private int piece ;
-	private String type; //  couleur
-
-	public Effet(int piece, String type)
+	private int     piece ;
+	private String  typeMultiple;
+	
+	public Effet(int piece,String typeMultiple)
 	{
 		this.piece=piece;
-		this.type=type;
+		this.typeMultiple=typeMultiple;
 	}
-
-	public int    getPiece  () { return this.piece ; }
-	public String getType   () { return this.type ;  }
+	
+	public Effet(int piece)
+	{
+		this(piece,null);
+	}
+	
+	public int    getPiece  (ArrayList<Carte> listCartes) 
+	{ 
+		if(this.typeMultiple == null)
+		{
+			return this.piece;
+		}
+		else
+		{
+			int i =0;
+			for(Carte carte : listCartes)
+			{
+				if(carte.getType().equals(typeMultiple)) i++;
+			}
+			return this.piece * i ;
+		} 
+	}
 }
