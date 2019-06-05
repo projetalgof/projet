@@ -1,11 +1,11 @@
-public enum EnumCarte 
+public enum EnumCarte
 {
 	champs(         "1"     ,"champs de ble"      ,"grain"      ,1,"bleu"   ,1),
 	ferme (         "2"     ,"ferme"              ,"production" ,1,"bleu"   ,1),
 	boulangerie(    "2-3"   ,"boulangerie"        ,"produit"    ,1,"vert"   ,1),
 	cafe(           "3"     ,"cafe"               ,"tasse"      ,1,"rouge"  ,2),
 	superette(      "4"     ,"superette"          ,"produit"    ,3,"vert"   ,2),
-	foret(          "5"     ,"forêt"              ,"rouage"     ,1,"bleu"   ,3),
+	foret(          "5"     ,"forêt"             ,"rouage"     ,1,"bleu"   ,3),
 	stade(          "6"     ,"state"              ,"antenne"    ,2,"violet" ,6),
 	chaineTV(       "6"     ,"chaine TV"          ,"antenne"    ,5,"violet" ,7),
 	centreAffaire(  "6"     ,"centre d'affaire"   ,"antenne"    ,0,"violet" ,8),

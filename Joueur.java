@@ -3,8 +3,10 @@ public class Joueur
 {
 	private static int jetDe ;
 
-	private String nom ; 
-	private int    piece ;
+	private        String nom ;
+	private static int    nbJoueur;
+	private        int    numJoueur;
+	private        int    piece ;
 	//liste de carte posseder par le joueur
 	private ArrayList<Carte> listCartes;
 	//tableau de 4 monument
@@ -14,14 +16,15 @@ public class Joueur
 	{
 		this.nom=nom;
 		this.listCartes = new ArrayList<Carte>();
-		this.monuments= new Monument[4];// Petetre metre un variable static dans les Regles
+		this.monuments= new Monument[4];
+		this.numJoueur = Joueur.nbJoueur++;
 	}
 
 	public void jetDe(int nbDe)
 	{
 		Joueur.jetDe=0;
 		for (int i=0;i<nbDe;i++)
-			Joueur.jetDe+=(int)(Math.random() * 6 +1);
+			Joueur.jetDe+=Math.random() * 6 +1;
 	}
 
 	public void ajouterCarte(Carte carte)
@@ -33,16 +36,17 @@ public class Joueur
 	public String           getNom        () { return this.nom ;        }
 	public int              getPiece      () { return this.piece ;      }
 	public Monument[]       getMonuments  () { return this.monuments ;  }
+	public int              getNum        () { return this.numJoueur;   }
 
-	public ArrayList<Carte> getListCartes () 
+	public ArrayList<Carte> getListCartes ()
 	{
 		ArrayList<Carte> tmp = new ArrayList<Carte>();
+
     	for(Carte carte : this.listCartes)
     	{
-			//tmp.add(new Carte(carte));
-			tmp.add(carte);
+    		tmp.add(carte);
     	}
-    	return tmp ; 
+    	return tmp ;
 	}
 	//set
 	public void setPiece(int piece) {this.piece+=piece ;}

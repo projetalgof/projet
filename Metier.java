@@ -6,7 +6,7 @@ public class Metier
     private ArrayList<Joueur> joueurs ; // list des joueur dans la parti
     private Joueur            joueurActif ; // tour du joueur
     private Banque            banque ; // banque du jeu
-    
+
     public Metier(Controleur ctrl,int nbJoueur)
     {
         this.ctrl=ctrl;
@@ -32,7 +32,11 @@ public class Metier
     			if(joueur.getNom().equals(joueurCommence)) joueurActif=joueur;
     		}
     	}
+      System.out.println("BANQUE \n");
     	this.ctrl.afficherBanque();
+      System.out.println("CARTE JOUEUR ACTIF \n");
+      this.ctrl.afficherEtatJoueur(this.joueurActif);
+
 
     }
 
@@ -40,6 +44,15 @@ public class Metier
     public boolean getIsEnd       () { return this.isEnd ;       }
     public Joueur  getJoueurActif () { return this.joueurActif ; }
     public Banque  getBanque      () { return this.banque ;      }
+    public int[]   getPiece       ()
+    {
+      int[] pieces = new int[this.joueurs.size()];
+      for(Joueur joueur : joueurs)
+      {
+        pieces[joueur.getNum()] = joueur.getPiece();
+      }
+      return pieces;
+    }
     //retourn un copie de la list de joueur
     public ArrayList<Joueur> getJoueurs()
     {

@@ -2,7 +2,7 @@ public class Controleur
 {
     private Metier metier ;
     private IHM    ihm ;
-    
+
     public Controleur()
     {
     	this.ihm    = new IHM(this) ;
@@ -27,6 +27,10 @@ public class Controleur
 	{
 		this.ihm.afficherBanque();
 	}
+  public Metier getMetier()
+  {
+    return this.metier;
+  }
 	public Banque getBanque () { return this.metier.getBanque(); }
 
 	//main

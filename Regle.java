@@ -5,7 +5,7 @@ public class Regle
 	private static final int PIECE_DEPART = 3 ;
 	private static final int NB_CARTE_ETEABLISSEMENT_BASE    = 6;
 	private static final int NB_CARTE_ETEABLISSEMENT_SPECIAL = 4;
-	//String de toute les cartes qu'on veux ajouter au jeu 
+	//String de toute les cartes qu'on veux ajouter au jeu
 	private static final String[] etablisementBase= {"champs","ferme","boulangerie","cafe","superette","foret","fromagerie","fabriqueMeuble","mine","restaurant","verger","marcherLegume"};
 	private static final String[] etablisementSpecial={"stade","chaineTV","centreAffaire"};
 
@@ -29,14 +29,14 @@ public class Regle
 		//cree les carte donner au joueur au debut
 		Carte champs      = EnumCarte.champs.creeCarte();
 		Carte boulangerie = EnumCarte.boulangerie.creeCarte();
-		Carte tmp ; 
+		Carte tmp ;
 		for(Joueur joueur : joueurs)
 		{
 			joueur.setPiece(Regle.PIECE_DEPART);// ajout du nombre de piece de depart
 			tmp=banque.retirer("champs de ble");
 			if(tmp != null )joueur.ajouterCarte(tmp);
 			tmp=banque.retirer("boulangerie");
-			if(tmp != null )joueur.ajouterCarte(tmp);		
+			if(tmp != null )joueur.ajouterCarte(tmp);
 		}
 
 
