@@ -14,14 +14,14 @@ public class Joueur
 	{
 		this.nom=nom;
 		this.listCartes = new ArrayList<Carte>();
-		this.monuments= new Monument[4];
+		this.monuments= new Monument[4];// Petetre metre un variable static dans les Regles
 	}
 
 	public void jetDe(int nbDe)
 	{
-		this.jetDe=0;
+		Joueur.jetDe=0;
 		for (int i=0;i<nbDe;i++)
-			this.jetDe+=Math.random() * 6 +1;
+			Joueur.jetDe+=(int)(Math.random() * 6 +1);
 	}
 
 	public void ajouterCarte(Carte carte)
@@ -37,10 +37,10 @@ public class Joueur
 	public ArrayList<Carte> getListCartes () 
 	{
 		ArrayList<Carte> tmp = new ArrayList<Carte>();
-
     	for(Carte carte : this.listCartes)
     	{
-    		tmp.add(carte);
+			//tmp.add(new Carte(carte));
+			tmp.add(carte);
     	}
     	return tmp ; 
 	}
