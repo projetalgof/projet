@@ -94,14 +94,8 @@ public class IHM {
 		System.out.println(s);
 	}
 
-	public int getNbPieceJoueur(Joueur joueur) {
-		int cpt = 0;
-
-		int[] pieces = this.ctrl.getMetier().getPiece();
-		for (int i = 0; i < pieces.length; i++) {
-			cpt += pieces[i];
-		}
-		return cpt;
+	private int getNbPieceJoueur(Joueur joueur) {
+		return joueur.getPiece();
 	}
 
 	public void afficherEtat() {
