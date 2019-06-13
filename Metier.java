@@ -13,27 +13,61 @@ public class Metier {
     this.joueurs = new ArrayList<Joueur>();
     this.banque = new Banque();
 
-    for (int i = 0; i < nbJoueur; i++) {
+    for (int i = 0; i < nbJoueur; i++) 
+    {
       this.joueurs.add(new Joueur(ctrl.creeJoueur()));
     }
     Regle.initialisation(joueurs, banque);
 
   }
 
-  public void jouer() {
-    if (joueurActif == null) {
+  public void jouer() 
+  {
+    char choix ;
+    if (joueurActif == null) 
+    {
       String joueurCommence = this.ctrl.commence();
-      for (Joueur joueur : this.joueurs) {
+      for (Joueur joueur : this.joueurs) 
+      {
         if (joueur.getNom().equals(joueurCommence))
           joueurActif = joueur;
       }
     }
+    this.joueurActif.jetDe(1);
+    this.ctrl.jetDe(this.joueurActif);
+    this.gain();
+    do
+    {
+      this.ctrl.afficherEtatJoueur(this.joueurActif);
+      choix=this.ctrl.choix();
+      switch(choix)
+      {
+        case 'A' : this.achat();
+          break;
+        case 'B' : this.ctrl.afficherBanque();
+          break;
+      }
+    }
+    while(choix != 'P');
 
-    this.ctrl.afficherBanque();
-    this.ctrl.afficherEtatJoueur(this.joueurActif);
+    joueurActif=joueurs.get((joueurs.indexOf(joueurActif)+1)%joueurs.size());
 
-    this.ctrl.afficherEtat();
+    //this.ctrl.afficherBanque();
+    //this.ctrl.afficherEtatJoueur(this.joueurActif);
+    //this.ctrl.afficherEtat();
 
+  }
+
+  private void achat()
+  {
+
+  }
+  private void gain()
+  {
+    for (Joueur joueur : this.joueurs)
+    {
+      joueur.gain(this.joueurActif,this.ctrl);
+    }
   }
 
   // get

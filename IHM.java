@@ -21,6 +21,28 @@ public class IHM {
 		return Integer.valueOf(nbjoueur);
 	}
 
+	public void jetDe(Joueur joueur)
+	{
+		System.out.println("\njet de dé : " + joueur.getSommeDe()+"");
+	}
+	public void achat()
+	{
+
+	}
+	public void effetCarte(String nomJoueur,String nomCarte ,int piece)
+	{
+		System.out.println(nomJoueur + " carte : " + nomCarte +" gain de piece : " + piece ) ;
+	}
+
+	public char choix()
+	{
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Que voulais vous faire");
+		System.out.println("[A] Acheter dans la banque");
+		System.out.println("[B] Afficher la banque");
+		System.out.println("[P] Passer");
+		return sc.next().charAt(0);
+	}
 	public String creeJoueur() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Entrer nom du joueur : ");
@@ -37,10 +59,6 @@ public class IHM {
 			joueur = sc.next();
 		}
 		return joueur;
-	}
-
-	public char afficherMenu() {
-		return 'a';
 	}
 
 	public void afficherBanque() {

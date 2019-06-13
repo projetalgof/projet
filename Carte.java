@@ -1,37 +1,40 @@
 import java.util.*;
 
-public class Carte implements Comparable<Carte> {
-	private String declencheur; // String pour gerais les declencheur multiple
-	private String nom;
-	private String type;
-	private boolean effetEstActive;
-	private char destination;
-	private Effet effet;
-	private int cout;
+public class Carte implements Comparable<Carte> 
+{
+	protected String declencheur; // String pour gerais les declencheur multiple
+	protected String nom   ;
+	protected String type  ;
+	protected int    cout  ;
+	protected int    piece ; 
 
-	public Carte(String declencheur, String nom, String type, Effet effet, int cout, char destination,
-			boolean effetEstActive) {
+	public Carte(String declencheur, String nom, String type,int cout,int piece) 
+	{
 		this.declencheur = declencheur;
-		this.nom = nom;
-		this.type = type;
-		this.effet = effet;
-		this.cout = cout;
-		this.destination = destination;
-		this.effetEstActive = effetEstActive;
+		this.nom         = nom   ;
+		this.type        = type  ;
+		this.cout        = cout  ;
+		this.piece       = piece ;
 	}
 
 	// constructeur par recopie
-	public Carte(Carte autreCarte) {
+	public Carte(Carte autreCarte) 
+	{
 		this.declencheur = autreCarte.declencheur;
-		this.nom = autreCarte.nom;
-		this.type = autreCarte.type;
-		this.effet = autreCarte.effet;
-		this.cout = autreCarte.cout;
+		this.nom         = autreCarte.nom;
+		this.type        = autreCarte.type;
+		this.cout        = autreCarte.cout;
+		this.piece       = autreCarte.piece;
 	}
 
+	//activation de l'effet carte
+	public void action(Joueur propietaire,Joueur joueurActif,Controleur ctrl){}
 	// get
 	public String getDeclencheur() {
 		return this.declencheur;
+	}
+	public int getPiece(){
+		return this.piece ;
 	}
 
 	public String getNom() {
@@ -42,16 +45,8 @@ public class Carte implements Comparable<Carte> {
 		return this.type;
 	}
 
-	public Effet getEffet() {
-		return this.effet;
-	}
-
 	public int getCout() {
 		return this.cout;
-	}
-
-	public char getDestination() {
-		return this.destination;
 	}
 
 	public int compareTo(Carte c) {

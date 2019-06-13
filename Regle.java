@@ -45,9 +45,14 @@ public class Regle {
 	}
 
 	// cree est ajoute un certain nombre de carte a la banque
-	private static void creeCarte(Banque banque, Carte carte, int nb) {
-		for (int i = 0; i < nb; i++) {
-			banque.ajouter(new Carte(carte));
+	private static void creeCarte(Banque banque, Carte carte, int nb) 
+	{
+		if(carte != null )
+		{
+			for (int i = 0; i < nb; i++) 
+			{
+				banque.ajouter(new Carte(carte));
+			}
 		}
 	}
 }
