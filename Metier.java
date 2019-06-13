@@ -66,4 +66,12 @@ public class Metier {
     }
     return tmp;
   }
+
+  public Joueur rechercherJoueur(String nom) {
+    for (Joueur joueur : this.joueurs) {
+      if (joueur.getNom().equals(nom))
+        return joueur;
+    }
+    return null;
+  }
 }
