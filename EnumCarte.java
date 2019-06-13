@@ -20,7 +20,7 @@ public enum EnumCarte
 	private final String nom         ;
 	private final String type        ;
 	private final int    gainEffet   ;
-	private final String couleur   ;
+	private final String couleur     ;
 	private final int    cout        ;
 	private final String multiple    ;
 
@@ -42,9 +42,9 @@ public enum EnumCarte
 		{
 			case "vert"  : tmp= new CarteVerte(this.declencheur,this.nom,this.type,this.cout,this.gainEffet , this.multiple);
 				break ;
-			case "rouge" : tmp= new CarteRouge(this.declencheur,this.nom,this.type,this.cout,this.gainEffet);
+			case "rouge" : tmp= new CarteRouge(this.declencheur,this.nom,this.type,this.cout,this.gainEffet); 
 				break ;
-			case "bleu"  : tmp= new CarteBleu(this.declencheur,this.nom,this.type,this.cout,this.gainEffet);
+			case "bleu"  : tmp= new CarteBleu(this.declencheur,this.nom,this.type,this.cout,this.gainEffet); 
 				break ;
 		}
 		return tmp ;

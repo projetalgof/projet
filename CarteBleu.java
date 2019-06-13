@@ -4,6 +4,10 @@ public class CarteBleu extends Carte
 	{
 		super(declencheur, nom, type, cout,piece);
 	}
+	public CarteBleu(CarteBleu carte)
+	{
+		super(carte);
+	}
 
 	public void action(Joueur propietaire,Joueur joueurActif,Controleur ctrl)
 	{

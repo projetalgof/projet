@@ -18,6 +18,7 @@ public class CarteVerte extends Carte
 	{
 		if(propietaire == joueurActif)
 		{
+			//verifie si l'effet a un multiple a faire
 			if(this.typeMultiple == null)
 			{
 				propietaire.setPiece(this.piece);

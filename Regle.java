@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
-public class Regle {
+public class Regle 
+{
 	// regle de base
 	private static final int PIECE_DEPART = 3;
 	private static final int NB_CARTE_ETEABLISSEMENT_BASE = 6;
@@ -10,16 +11,19 @@ public class Regle {
 			"fromagerie", "fabriqueMeuble", "mine", "restaurant", "verger", "marcherLegume" };
 	private static final String[] etablisementSpecial = { "stade", "chaineTV", "centreAffaire" };
 
-	public static void initialisation(ArrayList<Joueur> joueurs, Banque banque) {
+	public static void initialisation(ArrayList<Joueur> joueurs, Banque banque) 
+	{
 
 		// creation de la banque
 		// etablissement de base
-		for (int i = 0; i < Regle.etablisementBase.length; i++) {
+		for (int i = 0; i < Regle.etablisementBase.length; i++) 
+		{
 			Carte tmp = EnumCarte.valueOf(Regle.etablisementBase[i]).creeCarte();
 			Regle.creeCarte(banque, tmp, Regle.NB_CARTE_ETEABLISSEMENT_BASE);
 		}
 		// etablissement special
-		for (int i = 0; i < Regle.etablisementSpecial.length; i++) {
+		for (int i = 0; i < Regle.etablisementSpecial.length; i++) 
+		{
 			Carte tmp = EnumCarte.valueOf(Regle.etablisementSpecial[i]).creeCarte();
 			Regle.creeCarte(banque, tmp, Regle.NB_CARTE_ETEABLISSEMENT_SPECIAL);
 		}
@@ -28,7 +32,8 @@ public class Regle {
 		Carte champs = EnumCarte.champs.creeCarte();
 		Carte boulangerie = EnumCarte.boulangerie.creeCarte();
 		Carte tmp;
-		for (Joueur joueur : joueurs) {
+		for (Joueur joueur : joueurs) 
+		{
 			joueur.setPiece(Regle.PIECE_DEPART);// ajout du nombre de piece de depart
 			tmp = champs;
 			if (tmp != null)
@@ -40,18 +45,25 @@ public class Regle {
 
 	}
 
-	public static void tourDeJeu() {
-
-	}
-
 	// cree est ajoute un certain nombre de carte a la banque
 	private static void creeCarte(Banque banque, Carte carte, int nb) 
 	{
+		Carte tmp =null;
 		if(carte != null )
 		{
 			for (int i = 0; i < nb; i++) 
 			{
-				banque.ajouter(new Carte(carte));
+				//verifie la class pour utilise le bon constructeur par recopie
+				switch (carte.getClass().getName())
+				{
+					case "CarteRouge" : tmp = new CarteRouge((CarteRouge)carte);
+						break ;
+					case "CarteVerte" : tmp = new CarteVerte((CarteVerte)carte);
+						break ;
+					case "CarteBleu"  : tmp = new CarteBleu((CarteBleu)carte);
+						break ;
+				}
+				if(tmp != null )banque.ajouter(tmp);
 			}
 		}
 	}

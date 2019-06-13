@@ -29,28 +29,18 @@ public class Carte implements Comparable<Carte>
 
 	//activation de l'effet carte
 	public void action(Joueur propietaire,Joueur joueurActif,Controleur ctrl){}
-	// get
-	public String getDeclencheur() {
-		return this.declencheur;
-	}
-	public int getPiece(){
-		return this.piece ;
-	}
 
-	public String getNom() {
-		return this.nom;
-	}
-
-	public String getType() {
-		return this.type;
-	}
-
-	public int getCout() {
-		return this.cout;
-	}
-
-	public int compareTo(Carte c) {
+	public int compareTo(Carte c) 
+	{
 		return this.nom.compareTo(c.nom);
 	}
+
+	//----------------------------------------------------------------------------------------------------------------
+	//                                             GET
+	public String getDeclencheur () { return this.declencheur; }
+	public int    getPiece       () { return this.piece ;      }
+	public String getNom         () { return this.nom;         }
+	public String getType        () { return this.type;        }
+	public int    getCout        () { return this.cout;        }
 
 }

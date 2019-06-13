@@ -4,11 +4,12 @@ public class Joueur
 {
 	private static int[] jetDe;
 	private static int   sommeDe;
+	private static int   nbJoueur;
 
-	private String nom;
-	private static int nbJoueur;
-	private int numJoueur;
-	private int piece;
+	private String  nom;
+	private int     numJoueur;
+	private int     piece;
+	private boolean aAcheter ; //assure que l'on peu effectuer un seul achat a la fois
 	// liste de carte posseder par le joueur
 	private ArrayList<Carte> listCartes;
 	// tableau de 4 monument
@@ -17,34 +18,36 @@ public class Joueur
 	public Joueur(String nom) 
 	{
 		if(this.jetDe == null) this.jetDe = new int[2];
-		this.nom = nom;
+		this.nom        = nom;
 		this.listCartes = new ArrayList<Carte>();
-		this.monuments = new Monument[4];
-		this.numJoueur = Joueur.nbJoueur++;
+		this.monuments  = new Monument[4];
+		this.numJoueur  = Joueur.nbJoueur++;
 	}
-
+	//active les action de carte qui raporte des piece de la banque
 	public void gain(Joueur joueurActif,Controleur ctrl) 
 	{
 		for(Carte carte : this.listCartes) 
 		{
-			if(!carte.getClass().getName().equals("rouge"))
+			if( !(carte instanceof CarteRouge) )
 			{
 				if ((carte.getDeclencheur().indexOf((Joueur.sommeDe + ""))) >= 0) carte.action(this,joueurActif,ctrl);
 			}
 		}
 	}
-
+	//active les action de carte qui rapporte des piece des autre joueur
 	public void payer(Joueur joueurActif,Controleur ctrl)
 	{
 		for(Carte carte : this.listCartes) 
 		{
-			if(carte.getClass().getName().equals("rouge"))
+			if(carte instanceof CarteRouge)
 			{
 				if ((carte.getDeclencheur().indexOf((Joueur.sommeDe + ""))) >= 0)  carte.action(this,joueurActif,ctrl);
 			}
 		}
 	}
-	public void jetDe(int nbDe) {
+	//jet un nombre de dé
+	public void jetDe(int nbDe) 
+	{
 		int resultat = 0;
 		for (int i = 0; i < nbDe; i++)
 		{
@@ -53,42 +56,31 @@ public class Joueur
 		}
 		this.sommeDe=resultat;
 	}
-
+	//ajoute une carte au joueur
 	public void ajouterCarte(Carte carte) 
 	{
 		this.listCartes.add(carte);
 	}
+	//----------------------------------------------------------------------------------------------------------------
+	//                                             GET
+	public String     getNom       () { return this.nom;      }
+	public boolean    getAcheter   () { return this.aAcheter; }
+	public int        getSommeDe   () { return this.sommeDe ; }
+	public int        getPiece     () {	return this.piece;    }
+	public Monument[] getMonuments () {	return this.monuments;}
+	public int        getNum       () {	return this.numJoueur;}
 
-	// get
-	public String getNom() {
-		return this.nom;
-	}
-	public int getSommeDe()
+	//retourne une copie profonde de la list de carte
+	public ArrayList<Carte> getListCartes() 
 	{
-		return this.sommeDe ;
-	}
-
-	public int getPiece() {
-		return this.piece;
-	}
-
-	public Monument[] getMonuments() {
-		return this.monuments;
-	}
-
-	public int getNum() {
-		return this.numJoueur;
-	}
-
-	public ArrayList<Carte> getListCartes() {
 		ArrayList<Carte> tmp = new ArrayList<Carte>();
-
-		for (Carte carte : this.listCartes) {
-			tmp.add(carte);
+		for (Carte carte : this.listCartes) 
+		{
+			tmp.add(new Carte (carte));
 		}
 		return tmp;
 	}
-
+	//retourne le nombre de carte d'un mem type
 	public int getNbCarte(String type)
 	{
 		int i = 0 ;
@@ -98,9 +90,16 @@ public class Joueur
 		}
 		return i ; 
 	}
-
-	// set
-	public void setPiece(int piece) {
+	//----------------------------------------------------------------------------------------------------------------
+	//                                             SET
+	//ajoute les piece a piece existente
+	public void setPiece(int piece) 
+	{
 		this.piece += piece;
+	}
+	//en cas d'achat modifie le boolean
+	public void setAcheter(boolean b)
+	{
+		this.aAcheter=b;
 	}
 }
