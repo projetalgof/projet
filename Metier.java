@@ -66,10 +66,24 @@ public class Metier
 
   }
   //private meethode
+  private void achatMonument()
+  {
+    String achat = this.ctrl.achatMonument();
+    if(!achat.equals(""))
+    {
+      
+    }
+    else
+    {
+      this.ctrl.achatErreur();
+    }
+
+  }
+
   //gere l'achat de nouvelle etablissement
   private void achatEtablissement()
   {
-    String achat = this.ctrl.achat();
+    String achat = this.ctrl.achatEtablissement();
     if(!achat.equals(""))
     {
       if(this.joueurActif.getPiece() >= banque.consulter(achat).getCout())
@@ -89,10 +103,6 @@ public class Metier
       }
     }
 
-
-  }
-  private void achatMonument()
-  {
 
   }
 
@@ -128,9 +138,9 @@ public class Metier
   }
   //-------------------------------------------------------------------------------------------------------------------
   //----------------------------------------------------------GET------------------------------------------------------
-  public boolean getIsEnd     () { return this.isEnd;       }
-  public Joueur getJoueurActif() { return this.joueurActif; }
-  public Banque getBanque     () { return this.banque;      }
+  public boolean getIsEnd      () { return this.isEnd;       }
+  public Joueur  getJoueurActif() { return this.joueurActif; }
+  public Banque  getBanque     () { return this.banque;      }
 
   public int[] getPiece() 
   {

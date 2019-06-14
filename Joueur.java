@@ -12,15 +12,12 @@ public class Joueur
 	private boolean aAcheter ; //assure que l'on peu effectuer un seul achat a la fois
 	// liste de carte posseder par le joueur
 	private ArrayList<Carte> listCartes;
-	// tableau de 4 monument
-	private Monument[] monuments;
 
 	public Joueur(String nom) 
 	{
 		if(this.jetDe == null) this.jetDe = new int[2];
 		this.nom        = nom;
 		this.listCartes = new ArrayList<Carte>();
-		this.monuments  = new Monument[4];
 		this.numJoueur  = Joueur.nbJoueur++;
 	}
 	//active les action de carte qui raporte des piece de la banque
@@ -28,7 +25,7 @@ public class Joueur
 	{
 		for(Carte carte : this.listCartes) 
 		{
-			if( !(carte instanceof CarteRouge) )
+			if( !(carte instanceof CarteRouge) && !(carte instanceof Monument))
 			{
 				if ((carte.getDeclencheur().indexOf((Joueur.sommeDe + ""))) >= 0) carte.action(this,joueurActif,ctrl);
 			}
@@ -39,7 +36,7 @@ public class Joueur
 	{
 		for(Carte carte : this.listCartes) 
 		{
-			if(carte instanceof CarteRouge)
+			if(carte instanceof CarteRouge  && !(carte instanceof Monument))
 			{
 				if ((carte.getDeclencheur().indexOf((Joueur.sommeDe + ""))) >= 0)  carte.action(this,joueurActif,ctrl);
 			}
@@ -61,13 +58,22 @@ public class Joueur
 	{
 		this.listCartes.add(carte);
 	}
+	//verifie si le monument donner est actif
+	public boolean MonumentActif(String nom)
+	{
+		for(Carte carte : this.listCartes)
+		{
+			if(carte instanceof Monument && carte.getNom().equals(nom))
+				return ((Monument)carte).getIsBuild();
+		}
+		return false; 
+	}
 	//----------------------------------------------------------------------------------------------------------------
 	//                                             GET
 	public String     getNom       () { return this.nom;      }
 	public boolean    getAcheter   () { return this.aAcheter; }
 	public int        getSommeDe   () { return this.sommeDe ; }
 	public int        getPiece     () {	return this.piece;    }
-	public Monument[] getMonuments () {	return this.monuments;}
 	public int        getNum       () {	return this.numJoueur;}
 
 	//retourne une copie profonde de la list de carte

@@ -21,9 +21,10 @@ public class Controleur
 
 	//----------------------------------------------------------------------------------------------------------------
 	//                                             LIEN ACHAT
-	public String achat       ()                               { return this.ihm.achat();               }
-	public void   achatValide ( Joueur joueur , Carte carte )  { this.ihm.achatValide(joueur,carte) ;   }
-	public void   achatErreur ()                               { this.ihm.achatErreur() ;               }
+	public String achatEtablissement ()                               { return this.ihm.achatEtablissement(); }
+	public String achatMonument      ()                               { return this.ihm.achatMonument();      }
+	public void   achatValide        ( Joueur joueur , Carte carte )  { this.ihm.achatValide(joueur,carte) ;  }
+	public void   achatErreur        ()                               { this.ihm.achatErreur() ;              }
 
 	//----------------------------------------------------------------------------------------------------------------
 	//                                             LIEN CARTE

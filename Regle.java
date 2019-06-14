@@ -10,6 +10,7 @@ public class Regle
 	private static final String[] etablisementBase = { "champs", "ferme", "boulangerie", "cafe", "superette", "foret",
 			"fromagerie", "fabriqueMeuble", "mine", "restaurant", "verger", "marcherLegume" };
 	private static final String[] etablisementSpecial = { "stade", "chaineTV", "centreAffaire" };
+	private static final String[] monuments = {"gare","centreCom","parcAtraction","tourRadio"};
 
 	public static void initialisation(ArrayList<Joueur> joueurs, Banque banque) 
 	{
@@ -34,7 +35,15 @@ public class Regle
 		Carte tmp;
 		for (Joueur joueur : joueurs) 
 		{
-			joueur.setPiece(Regle.PIECE_DEPART);// ajout du nombre de piece de depart
+
+			for (int i = 0; i < monuments.length; i++) 
+			{
+				tmp = EnumCarte.valueOf(Regle.monuments[i]).creeCarte();
+				if (tmp != null)
+					joueur.ajouterCarte(tmp);
+			}
+
+			joueur.setPiece(Regle.PIECE_DEPART); // ajout du nombre de piece de depart
 			tmp = champs;
 			if (tmp != null)
 				joueur.ajouterCarte(tmp);
