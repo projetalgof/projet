@@ -54,7 +54,7 @@ public class Regle
 
 	}
 
-	// cree est ajoute un certain nombre de carte a la banque
+	// cree et ajoute un certain nombre de carte a la banque
 	private static void creeCarte(Banque banque, Carte carte, int nb) 
 	{
 		Carte tmp =null;

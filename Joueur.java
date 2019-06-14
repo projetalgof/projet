@@ -58,8 +58,10 @@ public class Joueur
 	{
 		this.listCartes.add(carte);
 	}
+	//----------------------------------------------------------------------------------------------------------------
+	//                                             GERE LES MONUMENTS
 	//verifie si le monument donner est actif
-	public boolean MonumentActif(String nom)
+	public boolean monumentActif(String nom)
 	{
 		for(Carte carte : this.listCartes)
 		{
@@ -67,6 +69,18 @@ public class Joueur
 				return ((Monument)carte).getIsBuild();
 		}
 		return false; 
+	}
+	//active le monument donne
+	public void activeMonument(String nom)
+	{
+		for(Carte carte : this.listCartes)
+		{
+			if(carte instanceof Monument && carte.getNom().equals(nom))
+			{
+				((Monument)carte).setIsBuild(true);
+				break;
+			}
+		}
 	}
 	//----------------------------------------------------------------------------------------------------------------
 	//                                             GET
@@ -95,6 +109,18 @@ public class Joueur
 			if(carte.getType().equals(type)) i++ ;
 		}
 		return i ; 
+	}
+	//retourne le monument concerné
+	public Monument getMonument(String nom )
+	{
+		for(Carte carte : this.listCartes)
+		{
+			if(carte instanceof Monument && carte.getNom().equals(nom))
+			{
+				return (Monument)carte ;
+			}
+		}
+		return null ; 
 	}
 	//----------------------------------------------------------------------------------------------------------------
 	//                                             SET

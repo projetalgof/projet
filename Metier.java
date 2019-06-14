@@ -38,7 +38,14 @@ public class Metier
       }
     }
     this.ctrl.transition(this.joueurActif);
-    this.joueurActif.jetDe(1);
+    //regarde si le monument gare est actif
+    if(this.joueurActif.monumentActif("gare"))
+    {
+      choix=this.ctrl.choixDe();
+      if(choix== '1') this.joueurActif.jetDe(1);
+      else            this.joueurActif.jetDe(2);
+    }
+    else this.joueurActif.jetDe(1);
     this.ctrl.jetDe(this.joueurActif);
     //les perte et gain de piece
     this.payer();
@@ -71,13 +78,14 @@ public class Metier
     String achat = this.ctrl.achatMonument();
     if(!achat.equals(""))
     {
-      
+      if(this.joueurActif.getPiece() >= this.joueurActif.getMonument(achat).getCout())
+        if(!this.joueurActif.monumentActif(achat))
+        {
+          
+        }
+        else this.ctrl.achatMonumentErreur();
+      else this.ctrl.achatErreur();
     }
-    else
-    {
-      this.ctrl.achatErreur();
-    }
-
   }
 
   //gere l'achat de nouvelle etablissement

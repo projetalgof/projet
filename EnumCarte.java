@@ -18,7 +18,7 @@ public enum EnumCarte
 	centreCom(      ""      ,"centre commercial"  ,"monument"   ,0,"monument" ,10,null),
 	parcAtraction(  ""      ,"parc d'atraction"   ,"monument"   ,0,"monument" ,16,null),
 	tourRadio(      ""      ,"tour de radio"      ,"monument"   ,0,"monument" ,22,null),
-	marcherLegume(  ""      ,"marcher au legume"  ,"pomme"      ,2,"vert"     ,2,"grain");
+	marcherLegume(  "11-12" ,"marcher au legume"  ,"pomme"      ,2,"vert"     ,2,"grain");
 
 	private final String declencheur ;
 	private final String nom         ;

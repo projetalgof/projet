@@ -18,6 +18,7 @@ public class Controleur
 	public String creeJoueur() { return this.ihm.creeJoueur(); }
 	public String commence  () { return this.ihm.commence();   }
 	public char   choix     () { return this.ihm.choix();      }
+	public char   choixDe   () { return this.ihm.choixDe();    }
 
 	//----------------------------------------------------------------------------------------------------------------
 	//                                             LIEN ACHAT
@@ -25,6 +26,7 @@ public class Controleur
 	public String achatMonument      ()                               { return this.ihm.achatMonument();      }
 	public void   achatValide        ( Joueur joueur , Carte carte )  { this.ihm.achatValide(joueur,carte) ;  }
 	public void   achatErreur        ()                               { this.ihm.achatErreur() ;              }
+	public void   achatMonumentErreur()                               { this.ihm.achatMonumentErreur() ;      }
 
 	//----------------------------------------------------------------------------------------------------------------
 	//                                             LIEN CARTE
