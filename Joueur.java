@@ -10,6 +10,7 @@ public class Joueur
 	private int     numJoueur;
 	private int     piece;
 	private boolean aAcheter ; //assure que l'on peu effectuer un seul achat a la fois
+	private boolean deuxJet ; //assure que l'on puisse rejeter les de qu'une fois
 	// liste de carte posseder par le joueur
 	private ArrayList<Carte> listCartes;
 
@@ -86,6 +87,7 @@ public class Joueur
 	//                                             GET
 	public String     getNom       () { return this.nom;      }
 	public boolean    getAcheter   () { return this.aAcheter; }
+	public boolean    getDeuxJet   () { return this.deuxJet;  }
 	public int        getSommeDe   () { return this.sommeDe ; }
 	public int        getPiece     () {	return this.piece;    }
 	public int        getNum       () {	return this.numJoueur;}
@@ -133,5 +135,10 @@ public class Joueur
 	public void setAcheter(boolean b)
 	{
 		this.aAcheter=b;
+	}
+	//en cas de 2eme jet
+	public void setDeuxJet(boolean b)
+	{
+		this.deuxJet=b;
 	}
 }

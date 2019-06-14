@@ -3,13 +3,14 @@ import java.util.ArrayList;
 public class Regle 
 {
 	// regle de base
-	private static final int PIECE_DEPART = 3;
+	private static final int PIECE_DEPART = 100;
 	private static final int NB_CARTE_ETEABLISSEMENT_BASE = 6;
 	private static final int NB_CARTE_ETEABLISSEMENT_SPECIAL = 4;
 	// String de toute les cartes qu'on veux ajouter au jeu
 	private static final String[] etablisementBase = { "champs", "ferme", "boulangerie", "cafe", "superette", "foret",
 			"fromagerie", "fabriqueMeuble", "mine", "restaurant", "verger", "marcherLegume" };
 	private static final String[] etablisementSpecial = { "stade", "chaineTV", "centreAffaire" };
+	//list des monument a cree et a posseder pour gagner
 	private static final String[] monuments = {"gare","centreCom","parcAtraction","tourRadio"};
 
 	public static void initialisation(ArrayList<Joueur> joueurs, Banque banque) 

@@ -46,6 +46,7 @@ public class Controleur
 	public void jetDe             (Joueur joueur) { this.ihm.jetDe(joueur);             }
 	public void afficherEtatJoueur(Joueur joueur) { this.ihm.afficherEtatJoueur(joueur);}
 	public void afficherEtat      ()              { this.ihm.afficherEtat();            }
+	public void erreurLanceDe     ()              { this.ihm.erreurLanceDe();           }
 	//----------------------------------------------------------------------------------------------------------------
 	//                                             GET
 	public Banque getBanque() { return this.metier.getBanque(); }

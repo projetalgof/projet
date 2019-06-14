@@ -12,12 +12,17 @@ public class CarteRouge extends Carte
 	public void action(Joueur propietaire,Joueur joueurActif,Controleur ctrl)
 	{
 		int nbPiece=0;
+		int piece ;
+		//verifie si le centre comercial est actif
+		if(propietaire.monumentActif("centre commercial")) 
+			piece=this.piece+1;
+		else piece=this.piece ;
 		//si le joueur actif a sufisament de piece
-		if (joueurActif.getPiece() - this.piece >= 0) 
+		if (joueurActif.getPiece() - piece >= 0) 
 		{
-			joueurActif.setPiece(-this.piece) ;
-			propietaire.setPiece( this.piece) ;
-			nbPiece=this.piece;
+			joueurActif.setPiece(-piece) ;
+			propietaire.setPiece( piece) ;
+			nbPiece=piece;
 		} 
 		else 
 		{

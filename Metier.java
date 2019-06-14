@@ -38,18 +38,8 @@ public class Metier
       }
     }
     this.ctrl.transition(this.joueurActif);
-    //regarde si le monument gare est actif
-    if(this.joueurActif.monumentActif("gare"))
-    {
-      choix=this.ctrl.choixDe();
-      if(choix== '1') this.joueurActif.jetDe(1);
-      else            this.joueurActif.jetDe(2);
-    }
-    else this.joueurActif.jetDe(1);
-    this.ctrl.jetDe(this.joueurActif);
-    //les perte et gain de piece
-    this.payer();
-    this.gain();
+    this.lanceDe();
+
     do
     {
       this.ctrl.afficherEtatJoueur(this.joueurActif);
@@ -62,32 +52,46 @@ public class Metier
           break;
         case 'M' : this.achatMonument();
           break;
+        case 'R' : this.deuxJet();
+          break;
       }
     }
     while(choix != 'P' && !this.joueurActif.getAcheter());
     this.ctrl.afficherEtatJoueur(this.joueurActif);
     //on reinitialise l'achat du joueur et on change de joueur
     this.joueurActif.setAcheter(false);
+    this.joueurActif.setDeuxJet(false);
     this.joueurActif=joueurs.get((joueurs.indexOf(joueurActif)+1)%joueurs.size());
     //this.ctrl.afficherEtat();
 
   }
   //private meethode
-  private void achatMonument()
+  private void deuxJet()
   {
-    String achat = this.ctrl.achatMonument();
-    if(!achat.equals(""))
+    if(this.joueurActif.monumentActif("tour de radio") && !this.joueurActif.getDeuxJet())
     {
-      if(this.joueurActif.getPiece() >= this.joueurActif.getMonument(achat).getCout())
-        if(!this.joueurActif.monumentActif(achat))
-        {
-          
-        }
-        else this.ctrl.achatMonumentErreur();
-      else this.ctrl.achatErreur();
+      this.lanceDe();
+      this.joueurActif.setDeuxJet(true);
     }
+    else this.ctrl.erreurLanceDe();
   }
-
+  //lance les de
+  private void lanceDe()
+  {
+    char choix ;
+    //regarde si le monument gare est actif
+    if(this.joueurActif.monumentActif("gare"))
+    {
+      choix=this.ctrl.choixDe();
+      if(choix== '1') this.joueurActif.jetDe(1);
+      else            this.joueurActif.jetDe(2);
+    }
+    else this.joueurActif.jetDe(1);
+    this.ctrl.jetDe(this.joueurActif);
+    //les perte et gain de piece
+    this.payer();
+    this.gain();
+  }
   //gere l'achat de nouvelle etablissement
   private void achatEtablissement()
   {
@@ -105,13 +109,26 @@ public class Metier
           this.ctrl.achatValide(this.joueurActif,tmp);
         } 
       }
-      else
-      {
-        this.ctrl.achatErreur();
-      }
+      else this.ctrl.achatErreur();
     }
-
-
+  }
+  //gere l'achat des monument
+  private void achatMonument()
+  {
+    String achat = this.ctrl.achatMonument();
+    if(!achat.equals(""))
+    {
+      if(this.joueurActif.getPiece() >= this.joueurActif.getMonument(achat).getCout())
+        if(!this.joueurActif.monumentActif(achat))
+        {
+          this.joueurActif.activeMonument(achat);
+          this.joueurActif.setPiece(-this.joueurActif.getMonument(achat).getCout());
+          this.joueurActif.setAcheter(true);
+          this.ctrl.achatValide(this.joueurActif,this.joueurActif.getMonument(achat));
+        }
+        else this.ctrl.achatMonumentErreur();
+      else this.ctrl.achatErreur();
+    }
   }
 
   //recherche un joueur specifique
@@ -133,7 +150,6 @@ public class Metier
       if(j-1 <0) j=this.joueurs.size()-1;
       else j--;
       this.joueurs.get(j).payer(this.joueurActif,this.ctrl);
-      //this.joueurs.get((joueurs.indexOf(joueurActif)-i)%this.joueurs.size()).payer(this.joueurActif,this.ctrl);
     }
   }
   //gere les gain lier au etablisemment

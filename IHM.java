@@ -35,6 +35,7 @@ public class IHM
 		System.out.println("[A] Acheter un etablissement");
 		System.out.println("[M] Acheter un monument");
 		System.out.println("[B] Afficher la banque");
+		System.out.println("[R] Relancer les dé");
 		System.out.println("[P] Passer");
 		return sc.next().charAt(0);
 	}
@@ -42,13 +43,15 @@ public class IHM
 	public char choixDe()
 	{
 		Scanner sc = new Scanner(System.in);
+		char choix;
 		System.out.println("Combien de dé voulais vous lancer");
 		do
 		{
 			System.out.println("[1] ou [2]");
+			choix=sc.next().charAt(0);
 		}
-		while(sc.next().charAt(0) != '1' && sc.next().charAt(0) != '2');
-		return sc.next().charAt(0);
+		while( choix != '1' && choix != '2');
+		return choix;
 
 	}
 	//affiche et renvois le nom du joueur a crée
@@ -104,9 +107,32 @@ public class IHM
 	public String achatMonument()
 	{
 		Scanner sc = new Scanner(System.in);
+		boolean inconnue = true;
+		String nomMonument =""; 
 		System.out.println("Quelle monuments souhaiter vous acheter ?");
-		String nomMonuments = sc.next();
-		return nomMonuments ;
+		System.out.println("[G] Gare");
+		System.out.println("[C] Centre comercial");
+		System.out.println("[P] Parc d'atraction");
+		System.out.println("[T] Tour radio");
+		char choix = sc.next().charAt(0);
+		if(choix != 'G'&& choix != 'C'&& choix != 'P'&& choix != 'T')
+		{
+			System.out.println("erreur de choix");
+			return "";
+		}
+		switch(choix)
+		{
+			case 'G' : nomMonument = "gare";
+				break;
+			case 'C' : nomMonument = "centre commercial";
+				break;
+			case 'P' : nomMonument = "parc d'atraction";
+				break;
+			case 'T' : nomMonument = "tour de radio";
+				break;
+		}
+
+		return nomMonument ;
 	}
 	//en cas d'achat valide
 	public void achatValide(Joueur joueur , Carte carte)
@@ -121,7 +147,7 @@ public class IHM
 
 	public void achatMonumentErreur()
 	{
-		System.out.println("Le monument choisi est deja actif");
+		System.out.println("Le monument choisi est deja construis");
 	}
 	//----------------------------------------------------------------------------------------------------------------
 	//                                             GERE LES CARTES
@@ -136,7 +162,11 @@ public class IHM
 	}
 	//----------------------------------------------------------------------------------------------------------------
 	//                                             GERE LES AFFICHAGE BRUT
-
+	//affiche une erreur dans le lancer de de
+	public void erreurLanceDe()
+	{
+		System.out.println("Vous n'avais pas la tour radio ou avais deja lancer vos deux ce tour si");
+	}
 	//affiche le jet de dé obtenue
 	public void jetDe(Joueur joueur)
 	{
