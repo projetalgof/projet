@@ -62,10 +62,10 @@ public class IHM
 	//----------------------------------------------------------------------------------------------------------------
 	//                                             GERE LES ACHATS
 	//affiche le choix de carte a acheter
-	public String achat()
+	public String achatEtablissement()
 	{
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Quelle carte souhaiter vous acheter ?");
+		System.out.println("Quelle etablissement souhaiter vous acheter ?");
 		String nomCarte = sc.next();
 		if(!this.ctrl.getBanque().contains(nomCarte))
 		{
@@ -73,6 +73,13 @@ public class IHM
 			return "" ; 
 		}
 		return nomCarte ;
+	}
+	public String achatMonument()
+	{
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Quelle monuments souhaiter vous acheter ?");
+		String nomMonuments = sc.next();
+		return nomMonuments ;
 	}
 	//en cas d'achat valide
 	public void achatValide(Joueur joueur , Carte carte)
