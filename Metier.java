@@ -61,8 +61,21 @@ public class Metier
     //on reinitialise l'achat du joueur et on change de joueur
     this.joueurActif.setAcheter(false);
     this.joueurActif.setDeuxJet(false);
-    this.joueurActif=joueurs.get((joueurs.indexOf(joueurActif)+1)%joueurs.size());
-    //this.ctrl.afficherEtat();
+    //on verifie si le joueur a gagner
+    if(!this.joueurActif.aGagner())
+    {
+      //on verifie si le joueur a le parc d'atraction et si il a fait un double
+      if(this.joueurActif.monumentActif("parc d'atraction") && this.joueurActif.estUnDouble())
+      {
+
+      }
+      else this.joueurActif=joueurs.get((joueurs.indexOf(joueurActif)+1)%joueurs.size());
+    }
+    else
+    {
+      this.isEnd = true ;
+      this.ctrl.gagner(this.joueurActif);
+    }
 
   }
   //private meethode

@@ -95,9 +95,9 @@ public class IHM {
 		return nomCarte;
 	}
 
-	public String achatMonument() {
+	public String achatMonument() 
+	{
 		Scanner sc = new Scanner(System.in);
-		boolean inconnue = true;
 		String nomMonument = "";
 		System.out.println("Quelle monuments souhaiter vous acheter ?");
 		System.out.println("[G] Gare");
@@ -105,23 +105,25 @@ public class IHM {
 		System.out.println("[P] Parc d'attraction");
 		System.out.println("[T] Tour radio");
 		char choix = sc.next().charAt(0);
-		if (choix != 'G' && choix != 'C' && choix != 'P' && choix != 'T') {
+		if (choix != 'G' && choix != 'C' && choix != 'P' && choix != 'T') 
+		{
 			System.out.println("erreur de choix");
 			return "";
 		}
-		switch (choix) {
-		case 'G':
-			nomMonument = "gare";
-			break;
-		case 'C':
-			nomMonument = "centre commercial";
-			break;
-		case 'P':
-			nomMonument = "parc d'attraction";
-			break;
-		case 'T':
-			nomMonument = "tour de radio";
-			break;
+		switch (choix)
+		{
+			case 'G':
+				nomMonument = "gare";
+				break;
+			case 'C':
+				nomMonument = "centre commercial";
+				break;
+			case 'P':
+				nomMonument = "parc d'atraction";
+				break;
+			case 'T':
+				nomMonument = "tour de radio";
+				break;
 		}
 
 		return nomMonument;
@@ -157,6 +159,10 @@ public class IHM {
 	// ----------------------------------------------------------------------------------------------------------------
 	// GERE LES AFFICHAGE BRUT
 	// affiche une erreur dans le lancer de de
+	public void gagner(Joueur joueur)
+	{
+		System.out.println("Le joueur : "+joueur.getNom()+" a ganer . BRAVO !!!");
+	}
 	public void erreurLanceDe() {
 		System.out.println("Vous n'avais pas la tour radio ou avais deja lancer vos deux ce tour si");
 	}

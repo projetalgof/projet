@@ -47,6 +47,7 @@ public class Controleur
 	public void afficherEtatJoueur(Joueur joueur) { this.ihm.afficherEtatJoueur(joueur);}
 	public void afficherEtat      ()              { this.ihm.afficherEtat();            }
 	public void erreurLanceDe     ()              { this.ihm.erreurLanceDe();           }
+	public void gagner            (Joueur joueur) { this.ihm.gagner(joueur);            }
 	//----------------------------------------------------------------------------------------------------------------
 	//                                             GET
 	public Banque getBanque() { return this.metier.getBanque(); }

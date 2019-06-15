@@ -50,6 +50,8 @@ public enum EnumCarte
 				break ;
 			case "bleu"    : tmp = new CarteBleu(this.declencheur,this.nom,this.type,this.cout,this.gainEffet); 
 				break ;
+			case "violet"  : tmp = new CarteViolet(this.declencheur,this.nom,this.type,this.cout,this.gainEffet , this.multiple);
+				break;
 			case"monument" : tmp = new Monument(this.nom,this.cout);
 				break;
 		}

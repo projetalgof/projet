@@ -47,6 +47,7 @@ public class Joueur
 	public void jetDe(int nbDe) 
 	{
 		int resultat = 0;
+		this.jetDe[0] = this.jetDe[1] = 0;
 		for (int i = 0; i < nbDe; i++)
 		{
 			this.jetDe[i] = (int)(Math.random() * 6 + 1);
@@ -54,10 +55,26 @@ public class Joueur
 		}
 		this.sommeDe=resultat;
 	}
+	//verifie si le dernier joueur a fait un double
+	public boolean estUnDouble()
+	{
+		return this.jetDe[0]== this.jetDe[1] ; 
+	}
 	//ajoute une carte au joueur
 	public void ajouterCarte(Carte carte) 
 	{
 		this.listCartes.add(carte);
+	}
+	public boolean aGagner()
+	{
+		boolean gagner ; 
+		for(Carte carte : this.listCartes)
+		{
+			if(carte instanceof Monument && !((Monument)carte).getIsBuild())
+				return false ;
+		}
+		return true ;
+
 	}
 	//----------------------------------------------------------------------------------------------------------------
 	//                                             GERE LES MONUMENTS
@@ -85,12 +102,13 @@ public class Joueur
 	}
 	//----------------------------------------------------------------------------------------------------------------
 	//                                             GET
-	public String     getNom       () { return this.nom;      }
-	public boolean    getAcheter   () { return this.aAcheter; }
-	public boolean    getDeuxJet   () { return this.deuxJet;  }
-	public int        getSommeDe   () { return this.sommeDe ; }
-	public int        getPiece     () {	return this.piece;    }
-	public int        getNum       () {	return this.numJoueur;}
+	public String     getNom       ()       { return this.nom;      }
+	public boolean    getAcheter   ()       { return this.aAcheter; }
+	public boolean    getDeuxJet   ()       { return this.deuxJet;  }
+	public int        getSommeDe   ()       { return this.sommeDe ; }
+	public int        getPiece     ()       { return this.piece;    }
+	public int        getNum       ()       { return this.numJoueur;}
+	public int        getDe        (int de) { return this.jetDe[de];}
 
 	//retourne une copie profonde de la list de carte
 	public ArrayList<Carte> getListCartes() 
