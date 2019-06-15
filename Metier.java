@@ -26,12 +26,12 @@ public class Metier
       {
         this.joueurs.add(new Joueur(ctrl.creeJoueur()));    //creation de la banque et distribution des carte au joueurs
       }
+      Regle.initialisation(this.joueurs, this.banque); 
     }
     else
     {
       this.chargement(this.ctrl.nomFichier());
     }
-    Regle.initialisation(this.joueurs, this.banque); 
   }
   //methode qui fait tourner le jeu
   public void jouer() 
@@ -100,15 +100,18 @@ public class Metier
       while ( sc.hasNextLine() )
       {
         chaine = sc.nextLine().split(":");
-        if(this.joueurs.isEmpty())
+        if(chaine[0].equals("joueur"))
         {
-          this.joueurs.add(new Joueur(chaine[0]));
-        }
-        else
-        {
-          Joueur tmp = this.rechercherJoueur(chaine[0]);
-          if(tmp == null)
-            this.joueurs.add(new Joueur(chaine[0]));
+          if(this.joueurs.isEmpty())
+          {
+            this.joueurs.add(new Joueur(chaine[1]));
+          }
+          else
+          {
+            Joueur tmp = this.rechercherJoueur(chaine[1]);
+            if(tmp == null)
+              this.joueurs.add(new Joueur(chaine[1]));
+          }
         }
       }
       sc.close();
@@ -124,24 +127,27 @@ public class Metier
       while ( sc.hasNextLine() )
       {
         chaine = sc.nextLine().split(":");
-        if(chaine[1].equals("carte"))
+        if(chaine.length >1)
         {
-          for(int i = 2 ; i<chaine.length;i=i+2)
+          if(chaine[1].equals("carte"))
           {
-            for(int j = 0; j < new Integer(chaine[i+1]) ;j++)
+            for(int i = 2 ; i<chaine.length;i=i+2)
             {
-              Carte tmp = this.banque.retirer(chaine[i]);
-              if(tmp != null )this.getJoueur(chaine[0]).ajouterCarte(tmp);
+              for(int j = 0; j < new Integer(chaine[i+1]) ;j++)
+              {
+                Carte tmp = this.banque.retirer(chaine[i]);
+                if(tmp != null )this.getJoueur(chaine[0]).ajouterCarte(tmp);
+              }
             }
           }
-        }
-        if(chaine[1].equals("piece"))
-        {
-          this.getJoueur(chaine[0]).setPiece(-Regle.PIECE_DEPART + new Integer(chaine[2]));
-        }
-        if(chaine[1].equals("monument"))
-        {
-          this.getJoueur(chaine[0]).activeMonument(chaine[2]);
+          if(chaine[1].equals("piece"))
+          {
+            this.getJoueur(chaine[0]).setPiece(-Regle.PIECE_DEPART + new Integer(chaine[2]));
+          }
+          if(chaine[1].equals("monument"))
+          {
+            this.getJoueur(chaine[0]).activeMonument(chaine[2]);
+          }
         }
         if(chaine[0].equals("tour"))
         {
