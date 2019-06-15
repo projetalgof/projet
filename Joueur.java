@@ -116,7 +116,7 @@ public class Joueur
 		ArrayList<Carte> tmp = new ArrayList<Carte>();
 		for (Carte carte : this.listCartes) 
 		{
-			tmp.add(new Carte (carte));
+			tmp.add(carte);
 		}
 		return tmp;
 	}

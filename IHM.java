@@ -11,17 +11,37 @@ public class IHM {
 	// ----------------------------------------------------------------------------------------------------------------
 	// GERE LES SCANNERS
 	// affichage du debut de jeu et envois le nombre de joueur choisie
-	public int debut() {
+	public char debut() 
+	{
+		Scanner sc = new Scanner(System.in);
+		char choix;
+		System.out.println("Bonjour est bienvenue sur le jeu MiniVille\n");
+		System.out.println("[N] Nouvelle Partie");
+		System.out.println("[C] Charger");
+		System.out.println("");
+		do
+			choix=sc.next().charAt(0);
+		while(choix != 'N' && choix != 'C');
+		return choix;
+	}
+	public int nombreDeJoueur()
+	{
 		Scanner sc = new Scanner(System.in);
 		String nbjoueur = "";
-		System.out.println("Bonjour est bienvenue sur le jeu MiniVille\n");
 		System.out.println("Combien de joueur vont jouer ?");
 		nbjoueur = sc.next();
-		while (!Pattern.matches("[2-4]", nbjoueur)) {
+		while (!Pattern.matches("[2-4]", nbjoueur)) 
+		{
 			System.out.println("Le nombre de joueur est entre 2 et 4 ");
 			nbjoueur = sc.next();
 		}
 		return Integer.valueOf(nbjoueur);
+	}
+	public String nomFichier()
+	{
+		System.out.println("Entrer le nom du fichier de sauvegarde");
+		Scanner sc = new Scanner(System.in);
+		return sc.nextLine();
 	}
 
 	// affiche le menu pour les choix des action

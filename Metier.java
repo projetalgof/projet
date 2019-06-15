@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.io.FileReader;
+import java.util.Scanner;
 
 public class Metier 
 {
@@ -10,18 +12,26 @@ public class Metier
 
   public Metier(Controleur ctrl, int nbJoueur) 
   {
+    boolean chargement = nbJoueur >1 ;
     //initialise
     this.ctrl    = ctrl;
     this.isEnd   = false;
     this.joueurs = new ArrayList<Joueur>();
     this.banque  = new Banque();
-    //creation des joueurs
-    for (int i = 0; i < nbJoueur; i++) 
+
+    if(chargement)
     {
-      this.joueurs.add(new Joueur(ctrl.creeJoueur()));
+      //creation des joueurs
+      for (int i = 0; i < nbJoueur; i++) 
+      {
+        this.joueurs.add(new Joueur(ctrl.creeJoueur()));
+        Regle.initialisation(this.joueurs, this.banque);     //creation de la banque et distribution des carte au joueurs
+      }
     }
-    //creation de la banque et distribution des carte au joueurs
-    Regle.initialisation(joueurs, banque);
+    else
+    {
+      this.chargement(this.ctrl.nomFichier());
+    }
   }
   //methode qui fait tourner le jeu
   public void jouer() 
@@ -79,6 +89,70 @@ public class Metier
 
   }
   //private meethode
+  //chargemement d'un parti a partir du nom de fichier
+  private void chargement(String nomFichier)
+  {
+    try
+    {
+      Scanner sc = new Scanner ( new FileReader ( nomFichier ) );
+      String[] chaine ;
+
+      while ( sc.hasNextLine() )
+      {
+        chaine = sc.nextLine().split(":");
+        if(this.joueurs.isEmpty())
+        {
+          this.joueurs.add(new Joueur(chaine[0]));
+        }
+        else
+        {
+          Joueur tmp = this.rechercherJoueur(chaine[0]);
+          if(tmp == null)
+            this.joueurs.add(new Joueur(chaine[0]));
+        }
+      }
+      sc.close();
+    }
+    catch(Exception e) { e.printStackTrace(); }
+
+    Regle.initialisation(this.joueurs, this.banque);  //creation de la banque et distribution des carte au joueurs
+
+    try
+    {
+      Scanner sc = new Scanner ( new FileReader (nomFichier) );
+      String[] chaine ;
+      while ( sc.hasNextLine() )
+      {
+        chaine = sc.nextLine().split(":");
+        if(chaine[1].equals("carte"))
+        {
+          for(int i = 2 ; i<chaine.length;i=i+2)
+          {
+            for(int j = 0; j < new Integer(chaine[i+1]) ;j++)
+            {
+              Carte tmp = this.banque.retirer(chaine[i]);
+              if(tmp != null )this.getJoueur(chaine[0]).ajouterCarte(tmp);
+            }
+          }
+        }
+        if(chaine[1].equals("piece"))
+        {
+          this.getJoueur(chaine[0]).setPiece(-Regle.PIECE_DEPART + new Integer(chaine[2]));
+        }
+        if(chaine[1].equals("monument"))
+        {
+          this.getJoueur(chaine[0]).activeMonument(chaine[2]);
+        }
+        if(chaine[0].equals("tour"))
+        {
+          this.joueurActif=this.getJoueur(chaine[1]);
+        }
+      }
+      sc.close();
+    }
+    catch(Exception e) { e.printStackTrace(); }
+  }
+
   private void deuxJet()
   {
     if(this.joueurActif.monumentActif("tour de radio") && !this.joueurActif.getDeuxJet())
@@ -197,5 +271,14 @@ public class Metier
       tmp.add(joueur);
     }
     return tmp;
+  }
+
+  public Joueur getJoueur(String nom) 
+  {
+    for (Joueur joueur : this.joueurs) 
+    {
+      if(joueur.getNom().equals(nom)) return joueur ; 
+    }
+    return null ;
   }
 }

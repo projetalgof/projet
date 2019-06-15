@@ -6,7 +6,10 @@ public class Controleur
 	public Controleur() 
 	{
 		this.ihm    = new IHM(this);
-		this.metier = new Metier(this, this.ihm.debut());
+		char choix = this.ihm.debut();
+		if(choix == 'N')
+			 this.metier = new Metier(this, this.ihm.nombreDeJoueur());
+		else this.metier = new Metier(this, 0);
 		//boucle du jeu
 		do
 			metier.jouer();
@@ -19,6 +22,7 @@ public class Controleur
 	public String commence  () { return this.ihm.commence();   }
 	public char   choix     () { return this.ihm.choix();      }
 	public char   choixDe   () { return this.ihm.choixDe();    }
+	public String nomFichier() { return this.ihm.nomFichier(); }
 
 	//----------------------------------------------------------------------------------------------------------------
 	//                                             LIEN ACHAT

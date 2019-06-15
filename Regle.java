@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Regle 
 {
 	// regle de base
-	private static final int PIECE_DEPART = 100;
+	public static final int PIECE_DEPART = 3;
 	private static final int NB_CARTE_ETEABLISSEMENT_BASE = 6;
 	private static final int NB_CARTE_ETEABLISSEMENT_SPECIAL = 4;
 	// String de toute les cartes qu'on veux ajouter au jeu
