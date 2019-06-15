@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class CarteViolet extends Carte
 {
 	private String typeMultiple;
@@ -33,74 +31,27 @@ public class CarteViolet extends Carte
 			else if("chaine TV".equals(this.nom))
 			{
 				
-				this.choisitUnJoueur(joueurActif,ctrl).setPiece(-this.piece);
+				ctrl.getMetier().choisitUnJoueur(joueurActif).setPiece(-this.piece);
 				joueurActif.setPiece(this.piece);
 			}else if("centre d'affaire".equals(this.nom))
 			{
 				Carte carteChoisit = null;
-				Joueur joueurChoisit = this.choisitUnJoueur(joueurActif, ctrl);
-				carteChoisit = this.choisitUnCarte(joueurChoisit);
+				Joueur joueurChoisit = ctrl.getMetier().choisitUnJoueur(joueurActif);
+				
+				ctrl.donnerLeCarteAQu(joueurActif);
+				carteChoisit = ctrl.getMetier().choisitUnCarte(joueurChoisit);
 				joueurActif.ajouterCarte(carteChoisit);
+				joueurChoisit.getListCartesReel().remove(carteChoisit);
 				
-				carteChoisit = this.choisitUnCarte(joueurActif);
+				ctrl.donnerLeCarteAQu(joueurChoisit);
+				carteChoisit =  ctrl.getMetier().choisitUnCarte(joueurActif);
 				joueurChoisit.ajouterCarte(carteChoisit);
-				
+				joueurActif.getListCartesReel().remove(carteChoisit);
 				
 			}
 				
 		}
 	}
-	//choisit un joueur
-	private Joueur choisitUnJoueur(Joueur joueurActif,Controleur ctrl)
-	{
-		Joueur joueurChoisi = null;
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Choisir un Joueur");
-		do
-		{
-			joueurChoisi = this.rechercherJoueur(sc.nextLine(),ctrl);
-			if(null == joueurChoisi || joueurActif.equals(joueurChoisi))
-				System.out.println("Saisir un nom correct");
-		}
-		while(null == joueurChoisi || joueurActif.equals(joueurChoisi));
-		
-		return joueurChoisi;
-	}
 	
-	private Joueur rechercherJoueur (String nom,Controleur ctrl)
-	{
-		for(Joueur tmp :ctrl.getMetier().getJoueurs())
-			if(nom.equals(tmp.getNom()))
-				return tmp;
-		return null;
-	}
-	
-	private Carte choisitUnCarte(Joueur joueurChoisit)
-	{
-		Carte carteChoisit = null;
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Choisir un Carte");
-		do
-		{
-			
-			carteChoisit = this.rechercherCarte(sc.nextLine(),joueurChoisit);
-			if(null == carteChoisit )
-				System.out.println("Saisir un nom correct");
-		}
-		while(null == carteChoisit);
-		
-		//remove cette carte
-		joueurChoisit.getListCartes().remove(carteChoisit);
-		
-		return carteChoisit;
-	}
-	
-	private Carte rechercherCarte (String nom,Joueur joueurChoisit)
-	{
-		for(Carte tmp :joueurChoisit.getListCartes())
-			if(nom.equals(tmp.getNom()))
-				return tmp;
-		return null;
-	}
-	
+
 }

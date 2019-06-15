@@ -72,6 +72,8 @@ public class Regle
 						break ;
 					case "CarteBleu"  : tmp = new CarteBleu((CarteBleu)carte);
 						break ;
+					case "CarteViolet"  : tmp = new CarteViolet((CarteViolet)carte);
+						break ;
 				}
 				if(tmp != null )banque.ajouter(tmp);
 			}

@@ -325,7 +325,7 @@ public class IHM {
 		System.out.println(s);
 	}
 
-	/*// --------------------------------------------------violet
+	// --------------------------------------------------violet
 	// choisit un joueur
 	public String choisitUnJoueur() {
 		Scanner sc = new Scanner(System.in);
@@ -351,5 +351,5 @@ public class IHM {
 
 	public void donnerLeCarte(Joueur joueur) {
 		System.out.println("Choisir un Carte et donner à" + joueur.getNom());
-	}*/
+	}
 }

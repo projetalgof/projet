@@ -25,13 +25,14 @@ public class Metier
       for (int i = 0; i < nbJoueur; i++) 
       {
         this.joueurs.add(new Joueur(ctrl.creeJoueur()));
-        Regle.initialisation(this.joueurs, this.banque);     //creation de la banque et distribution des carte au joueurs
+            //creation de la banque et distribution des carte au joueurs
       }
     }
     else
     {
       this.chargement(this.ctrl.nomFichier());
     }
+    Regle.initialisation(this.joueurs, this.banque); 
   }
   //methode qui fait tourner le jeu
   public void jouer() 
@@ -280,5 +281,42 @@ public class Metier
       if(joueur.getNom().equals(nom)) return joueur ; 
     }
     return null ;
+  }
+    //-------------------------violet
+  //choisit un joueur
+  public Joueur choisitUnJoueur(Joueur joueurActif)
+	{
+		Joueur joueurChoisi = null;
+		do
+		{
+			joueurChoisi = this.rechercherJoueur(this.ctrl.choisitUnJoueur());
+			if(null == joueurChoisi || joueurActif.equals(joueurChoisi))
+				this.ctrl.erreurSaisirNomJoueur();
+		}
+		while(null == joueurChoisi || joueurActif.equals(joueurChoisi));
+		
+		return joueurChoisi;
+	}
+  //choisit un Caret
+  public Carte choisitUnCarte(Joueur joueurChoisit)
+  {
+		Carte carteChoisit = null;
+		do
+		{
+			carteChoisit = this.rechercherCarte(this.ctrl.choisitUnCarte(), joueurChoisit);
+		}
+		while(null == carteChoisit || carteChoisit instanceof Monument
+				||carteChoisit instanceof CarteViolet);
+	
+		
+		return carteChoisit;
+  }
+	
+  private Carte rechercherCarte (String nom,Joueur joueurChoisit)
+  {
+		for(Carte tmp :joueurChoisit.getListCartes())
+			if(nom.equals(tmp.getNom()))
+				return tmp;
+		return null;
   }
 }
