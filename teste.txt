@@ -1,6 +1,6 @@
 joueur:joueur1
 joueur:joueur2
-joueur1:carte:cafe:1:ferme:2
+joueur1:carte:cafe:1:ferme:2:chaine TV:1
 joueur1:piece:10
 joueur1:monument:gare
 joueur2:carte:restaurant:1

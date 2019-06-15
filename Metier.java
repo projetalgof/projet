@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.io.FileReader;
+import java.io.File;
 import java.util.Scanner;
 
 public class Metier 
@@ -13,6 +13,7 @@ public class Metier
   public Metier(Controleur ctrl, int nbJoueur) 
   {
     boolean chargement = nbJoueur >1 ;
+    File file ;
     //initialise
     this.ctrl    = ctrl;
     this.isEnd   = false;
@@ -28,9 +29,13 @@ public class Metier
       }
       Regle.initialisation(this.joueurs, this.banque); 
     }
-    else
+    else 
     {
-      this.chargement(this.ctrl.nomFichier());
+      //verifie si le fichier donner existe bien
+      do
+        file = new File(this.ctrl.nomFichier()+".txt");
+      while(!file.exists());
+        this.chargement(file);
     }
   }
   //methode qui fait tourner le jeu
@@ -92,11 +97,11 @@ public class Metier
   }
   //private meethode
   //chargemement d'un parti a partir du nom de fichier
-  private void chargement(String nomFichier)
+  private void chargement(File file)
   {
     try
     {
-      Scanner sc = new Scanner ( new FileReader ( nomFichier ) );
+      Scanner sc = new Scanner (file);
       String[] chaine ;
 
       while ( sc.hasNextLine() )
@@ -124,7 +129,7 @@ public class Metier
 
     try
     {
-      Scanner sc = new Scanner ( new FileReader (nomFichier) );
+      Scanner sc = new Scanner ( file );
       String[] chaine ;
       while ( sc.hasNextLine() )
       {
@@ -317,13 +322,16 @@ public class Metier
     
     return joueurChoisi;
   }
-  //choisit un Caret
+  //choisit un Carte
   public Carte choisitUnCarte(Joueur joueurChoisit)
   {
     Carte carteChoisit = null;
     do
     {
       carteChoisit = this.rechercherCarte(this.ctrl.choisitUnCarte(), joueurChoisit);
+    
+       if(null == carteChoisit || carteChoisit instanceof Monument  ||carteChoisit instanceof CarteViolet)
+        this.ctrl.erreurSaisirNomCarte();
     }
     while(null == carteChoisit || carteChoisit instanceof Monument
         ||carteChoisit instanceof CarteViolet);

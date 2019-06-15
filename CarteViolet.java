@@ -22,17 +22,41 @@ public class CarteViolet extends Carte
 			if("stade".equals(this.nom))
 				for(Joueur tmp : ctrl.getMetier().getJoueurs())
 				{
+					int nbPiece=0;
 					if(!tmp.equals(joueurActif))
 					{
-						tmp.setPiece(-this.piece);
-						joueurActif.setPiece(this.piece);
+						if (tmp.getPiece() - this.piece >= 0) 
+						{
+							tmp.setPiece(-this.piece) ;
+							propietaire.setPiece( this.piece) ;
+							nbPiece=this.piece;
+						} 
+						else 
+						{
+							propietaire.setPiece( tmp.getPiece()) ;
+							nbPiece=tmp.getPiece();
+							tmp.setPiece(-tmp.getPiece()) ;
+						}
+						ctrl.effetCartePaimment(tmp.getNom(),propietaire.getNom(),this.getNom(),nbPiece);	
 					}
 				}
 			else if("chaine TV".equals(this.nom))
 			{
-				
-				ctrl.getMetier().choisitUnJoueur(joueurActif).setPiece(-this.piece);
-				joueurActif.setPiece(this.piece);
+				Joueur tmp = ctrl.getMetier().choisitUnJoueur(joueurActif);
+				int nbPiece=0;
+				if (tmp.getPiece() - this.piece >= 0) 
+				{
+					tmp.setPiece(-this.piece);
+					nbPiece=this.piece;
+					joueurActif.setPiece(this.piece);
+				}
+				else
+				{
+					joueurActif.setPiece( tmp.getPiece()) ;
+					nbPiece=tmp.getPiece();
+					tmp.setPiece(-tmp.getPiece()) ;
+				}
+				ctrl.effetCartePaimment(tmp.getNom(),propietaire.getNom(),this.getNom(),nbPiece);	
 			}
 			else if("centre d'affaire".equals(this.nom))
 			{
