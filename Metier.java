@@ -64,6 +64,8 @@ public class Metier
           break;
         case 'R' : this.deuxJet();
           break;
+        case 'Z' : if(Controleur.DEBUG) this.joueurActif.setPiece(30);
+          break;
       }
     }
     while(choix != 'P' && !this.joueurActif.getAcheter());
@@ -77,7 +79,7 @@ public class Metier
       //on verifie si le joueur a le parc d'atraction et si il a fait un double
       if(this.joueurActif.monumentActif("parc d'atraction") && this.joueurActif.estUnDouble())
       {
-
+        this.ctrl.rejouer(this.joueurActif);
       }
       else this.joueurActif=joueurs.get((joueurs.indexOf(joueurActif)+1)%joueurs.size());
     }
@@ -172,14 +174,18 @@ public class Metier
   private void lanceDe()
   {
     char choix ;
-    //regarde si le monument gare est actif
-    if(this.joueurActif.monumentActif("gare"))
+    if(Controleur.DEBUG) this.joueurActif.setJetDe(this.ctrl.debugJetDe(),this.ctrl.debugJetDe());
+    else
     {
-      choix=this.ctrl.choixDe();
-      if(choix== '1') this.joueurActif.jetDe(1);
-      else            this.joueurActif.jetDe(2);
+      //regarde si le monument gare est actif
+      if(this.joueurActif.monumentActif("gare"))
+      {
+        choix=this.ctrl.choixDe();
+        if(choix== '1') this.joueurActif.jetDe(1);
+        else            this.joueurActif.jetDe(2);
+      }
+      else this.joueurActif.jetDe(1);
     }
-    else this.joueurActif.jetDe(1);
     this.ctrl.jetDe(this.joueurActif);
     //les perte et gain de piece
     this.payer();

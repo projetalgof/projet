@@ -53,6 +53,13 @@ public class Controleur
 	public void afficherEtat      ()              { this.ihm.afficherEtat();            }
 	public void erreurLanceDe     ()              { this.ihm.erreurLanceDe();           }
 	public void gagner            (Joueur joueur) { this.ihm.gagner(joueur);            }
+	public void rejouer           (Joueur joueur) { this.ihm.rejouer(joueur);           }
+
+	//----------------------------------------------------------------------------------------------------------------
+	//                                             DEBUG
+
+	public int debugJetDe() { return this.ihm.debugJetDe() ;}
+
 	//----------------------------------------------------------------------------------------------------------------
 	//                                             GET
 	public Banque getBanque() { return this.metier.getBanque(); }

@@ -159,4 +159,14 @@ public class Joueur
 	{
 		this.deuxJet=b;
 	}
+	//modifie le jet de de DEBUG
+	public void setJetDe(int a,int b)
+	{
+		if(Controleur.DEBUG)
+		{
+			this.jetDe[0]   = a ;
+			this.jetDe[1]   = b ;
+			this.sommeDe = a + b ;
+		}
+	}
 }

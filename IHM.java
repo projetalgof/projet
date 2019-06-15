@@ -15,9 +15,9 @@ public class IHM {
 		Scanner sc = new Scanner(System.in);
 		char choix;
 		System.out.println("Bonjour est bienvenue sur le jeu MiniVille\n");
+		if(Controleur.DEBUG) System.out.println("DEBUG ACTIF");
 		System.out.println("[N] Nouvelle Partie");
 		System.out.println("[C] Charger");
-		System.out.println("");
 		do
 			choix = sc.next().charAt(0);
 		while (choix != 'N' && choix != 'C');
@@ -43,7 +43,8 @@ public class IHM {
 	}
 
 	// affiche le menu pour les choix des action
-	public char choix() {
+	public char choix() 
+	{
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Que voulais vous faire");
 		System.out.println("[A] Acheter un etablissement");
@@ -51,11 +52,13 @@ public class IHM {
 		System.out.println("[B] Afficher la banque");
 		System.out.println("[R] Relancer les dé");
 		System.out.println("[P] Passer");
+		if(Controleur.DEBUG)System.out.println("[Z] DEBUG donner 30 piece");
 		return sc.next().charAt(0);
 	}
 
 	// affiche le menu choix pour le jet de
-	public char choixDe() {
+	public char choixDe() 
+	{
 		Scanner sc = new Scanner(System.in);
 		char choix;
 		System.out.println("Combien de dé voulais vous lancer");
@@ -208,6 +211,10 @@ public class IHM {
 
 	// ----------------------------------------------------------------------------------------------------------------
 	// GERE LES AFFICHAGE BRUT
+	public void rejouer(Joueur joueur)
+	{
+		System.out.println("Le joueur : " + joueur.getNom() +"a fait un double , il rejoue");
+	}
 	// affiche une erreur dans le lancer de de
 	public void gagner(Joueur joueur) {
 		System.out.println("Le joueur : " + joueur.getNom() + " a ganer . BRAVO !!!");
@@ -219,6 +226,7 @@ public class IHM {
 
 	// affiche le jet de dé obtenue
 	public void jetDe(Joueur joueur) {
+		System.out.println("1er de --> "+ joueur.getDe(0) + (joueur.getDe(1) > 0 ? "  2eme de --> : " + joueur.getDe(1) : ""));
 		System.out.println("\njet de dé : " + joueur.getSommeDe() + "");
 	}
 
@@ -323,6 +331,14 @@ public class IHM {
 		s += "+---------------------------------+\n";
 
 		System.out.println(s);
+	}
+	//----------------------------------------------------------------------------------------------------------------
+	//                                             DEBUG
+	public int debugJetDe()
+	{
+		Scanner sc = new Scanner(System.in);
+		System.out.println("DEBUG : choisir le jet de dé");
+		return sc.nextInt();
 	}
 
 	/*// --------------------------------------------------violet
