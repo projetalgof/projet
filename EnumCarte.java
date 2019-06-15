@@ -6,7 +6,7 @@ public enum EnumCarte
 	cafe(           "3"     ,"cafe"               ,"tasse"      ,1,"rouge"    ,2,null),
 	superette(      "4"     ,"superette"          ,"produit"    ,3,"vert"     ,2,null),
 	foret(          "5"     ,"forêt"              ,"rouage"     ,1,"bleu"     ,3,null),
-	stade(          "6"     ,"state"              ,"antenne"    ,2,"violet"   ,6,null),
+	stade(          "6"     ,"stade"              ,"antenne"    ,2,"violet"   ,6,null),
 	chaineTV(       "6"     ,"chaine TV"          ,"antenne"    ,5,"violet"   ,7,null),
 	centreAffaire(  "6"     ,"centre d'affaire"   ,"antenne"    ,0,"violet"   ,8,null),
 	fromagerie(     "7"     ,"fromagerie"         ,"usine"      ,3,"vert"     ,5,"production"),

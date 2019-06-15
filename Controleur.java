@@ -32,6 +32,7 @@ public class Controleur
 	public void   achatValide        ( Joueur joueur , Carte carte )  { this.ihm.achatValide(joueur,carte) ;  }
 	public void   achatErreur        ()                               { this.ihm.achatErreur() ;              }
 	public void   achatMonumentErreur()                               { this.ihm.achatMonumentErreur() ;      }
+	public void   achatVioletErreur  ()                               { this.ihm.achatVioletErreur() ;        }
 
 	//----------------------------------------------------------------------------------------------------------------
 	//                                             LIEN CARTE
@@ -59,6 +60,14 @@ public class Controleur
 	//                                             DEBUG
 
 	public int debugJetDe() { return this.ihm.debugJetDe() ;}
+
+	//----------------------------------------------------------------------------------------------------------------
+	//----------------------------------violet
+	public String choisitUnJoueur       ()              { return this.ihm.choisitUnJoueur(); }
+	public void   erreurSaisirNomJoueur ()              { this.ihm.erreurSaisrNomJoueur();   }
+	public String choisitUnCarte        ()              { return this.ihm.choisitUnCarte();  }
+	public void   erreurSaisirNomCarte  ()              { this.ihm.erreurSaisrNomCarte();    }
+	public void   donnerLeCarteAQu      (Joueur joueur) { this.ihm.donnerLeCarte(joueur);    }
 
 	//----------------------------------------------------------------------------------------------------------------
 	//                                             GET

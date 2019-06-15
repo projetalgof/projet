@@ -76,6 +76,16 @@ public class Joueur
 		return true ;
 
 	}
+	//verifie si la carte est present
+	public boolean contains(String nom)
+	{
+    	for(Carte carte : this.listCartes)
+    	{
+    		if (carte.getNom().equals(nom)) return true ;
+    	}
+    	return false ; 
+	}
+
 	//----------------------------------------------------------------------------------------------------------------
 	//                                             GERE LES MONUMENTS
 	//verifie si le monument donner est actif

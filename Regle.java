@@ -66,11 +66,13 @@ public class Regle
 				//verifie la class pour utilise le bon constructeur par recopie
 				switch (carte.getClass().getName())
 				{
-					case "CarteRouge" : tmp = new CarteRouge((CarteRouge)carte);
+					case "CarteRouge"  : tmp = new CarteRouge((CarteRouge)carte);
 						break ;
-					case "CarteVerte" : tmp = new CarteVerte((CarteVerte)carte);
+					case "CarteVerte"  : tmp = new CarteVerte((CarteVerte)carte);
 						break ;
-					case "CarteBleu"  : tmp = new CarteBleu((CarteBleu)carte);
+					case "CarteBleu"   : tmp = new CarteBleu((CarteBleu)carte);
+						break ;
+					case "CarteViolet" : tmp = new CarteViolet((CarteViolet)carte);
 						break ;
 				}
 				if(tmp != null )banque.ajouter(tmp);

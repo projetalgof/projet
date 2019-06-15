@@ -199,14 +199,22 @@ public class Metier
     {
       if(this.joueurActif.getPiece() >= banque.consulter(achat).getCout())
       {
-        Carte tmp = this.banque.retirer(achat);
-        if(tmp != null )
+        //verifie que la carte acheter et violet et si oui non poseder
+        if(banque.consulter(achat) instanceof CarteViolet && this.joueurActif.contains(achat))
         {
-          this.joueurActif.ajouterCarte(tmp);
-          this.joueurActif.setPiece(-tmp.getCout());
-          this.joueurActif.setAcheter(true);
-          this.ctrl.achatValide(this.joueurActif,tmp);
-        } 
+          this.ctrl.achatVioletErreur();
+        }
+        else
+        {
+          Carte tmp = this.banque.retirer(achat);
+          if(tmp != null )
+          {
+            this.joueurActif.ajouterCarte(tmp);
+            this.joueurActif.setPiece(-tmp.getCout());
+            this.joueurActif.setAcheter(true);
+            this.ctrl.achatValide(this.joueurActif,tmp);
+          } 
+        }
       }
       else this.ctrl.achatErreur();
     }
@@ -292,5 +300,43 @@ public class Metier
       if(joueur.getNom().equals(nom)) return joueur ; 
     }
     return null ;
+  }
+
+      //-------------------------violet
+  //choisit un joueur
+  public Joueur choisitUnJoueur(Joueur joueurActif)
+  {
+    Joueur joueurChoisi = null;
+    do
+    {
+      joueurChoisi = this.rechercherJoueur(this.ctrl.choisitUnJoueur());
+      if(null == joueurChoisi || joueurActif.equals(joueurChoisi))
+        this.ctrl.erreurSaisirNomJoueur();
+    }
+    while(null == joueurChoisi || joueurActif.equals(joueurChoisi));
+    
+    return joueurChoisi;
+  }
+  //choisit un Caret
+  public Carte choisitUnCarte(Joueur joueurChoisit)
+  {
+    Carte carteChoisit = null;
+    do
+    {
+      carteChoisit = this.rechercherCarte(this.ctrl.choisitUnCarte(), joueurChoisit);
+    }
+    while(null == carteChoisit || carteChoisit instanceof Monument
+        ||carteChoisit instanceof CarteViolet);
+  
+    
+    return carteChoisit;
+  }
+  
+  private Carte rechercherCarte (String nom,Joueur joueurChoisit)
+  {
+    for(Carte tmp :joueurChoisit.getListCartes())
+      if(nom.equals(tmp.getNom()))
+        return tmp;
+    return null;
   }
 }

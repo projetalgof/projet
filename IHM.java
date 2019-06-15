@@ -180,6 +180,10 @@ public class IHM {
 		s += l;
 		System.out.println(s);
 	}
+	public void achatVioletErreur()
+	{
+		System.out.println("Vous posseder deja cette carte");
+	}
 
 	// ----------------------------------------------------------------------------------------------------------------
 	// GERE LES CARTES
@@ -341,7 +345,7 @@ public class IHM {
 		return sc.nextInt();
 	}
 
-	/*// --------------------------------------------------violet
+
 	// choisit un joueur
 	public String choisitUnJoueur() {
 		Scanner sc = new Scanner(System.in);
@@ -361,5 +365,5 @@ public class IHM {
 	}
 	public void donnerLeCarte(Joueur joueur) {
 		System.out.println("Choisir un Carte et donner à" + joueur.getNom());
-	}*/
+	}
 }
