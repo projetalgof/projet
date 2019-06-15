@@ -159,6 +159,4 @@ public class Joueur
 	{
 		this.deuxJet=b;
 	}
-		//-----------------------------------------------violet
-		public ArrayList<Carte>        getListCartesReel() { return this.listCartes;}
 }

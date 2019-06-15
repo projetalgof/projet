@@ -1,5 +1,6 @@
 public class Controleur 
 {
+	public final static boolean DEBUG = true ;
 	private Metier metier;
 	private IHM    ihm;
 
@@ -58,12 +59,6 @@ public class Controleur
 	public Metier getMetier() { return this.metier;             }
 
 	//----------------------------------------------------------------------------------------------------------------
-		//----------------------------------violet
-	public String choisitUnJoueur()    {return this.ihm.choisitUnJoueur();}
-	public void erreurSaisirNomJoueur() {this.ihm.erreurSaisrNomJoueur();}
-	public String choisitUnCarte()     {return this.ihm.choisitUnCarte();}
-	public void erreurSaisirNomCarte() {this.ihm.erreurSaisrNomCarte();}
-	public void donnerLeCarteAQu(Joueur joueur)     {this.ihm.donnerLeCarte(joueur);}
 	//                                             MAIN
 	public static void main(String agrs[]) {
 		new Controleur();

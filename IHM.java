@@ -325,31 +325,25 @@ public class IHM {
 		System.out.println(s);
 	}
 
-	// --------------------------------------------------violet
+	/*// --------------------------------------------------violet
 	// choisit un joueur
 	public String choisitUnJoueur() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Choisir un Joueur");
-
 		return sc.nextLine();
 	}
-
 	public void erreurSaisrNomJoueur() {
 		System.out.println("Saisir un nom correct");
 	}
-
 	public String choisitUnCarte() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Choisir un Carte");
-
 		return sc.nextLine();
 	}
-
 	public void erreurSaisrNomCarte() {
 		System.out.println("Saisir un nom carte");
 	}
-
 	public void donnerLeCarte(Joueur joueur) {
 		System.out.println("Choisir un Carte et donner à" + joueur.getNom());
-	}
+	}*/
 }
