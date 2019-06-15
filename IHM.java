@@ -4,14 +4,16 @@ import java.util.regex.*;
 public class IHM {
 	private Controleur ctrl;
 
-	public IHM(Controleur ctrl) {
+	public IHM(Controleur ctrl) 
+	{
 		this.ctrl = ctrl;
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
 	// GERE LES SCANNERS
 	// affichage du debut de jeu et envois le nombre de joueur choisie
-	public char debut() {
+	public char debut() 
+	{
 		Scanner sc = new Scanner(System.in);
 		char choix;
 		System.out.println("Bonjour est bienvenue sur le jeu MiniVille\n");
@@ -24,7 +26,8 @@ public class IHM {
 		return choix;
 	}
 
-	public int nombreDeJoueur() {
+	public int nombreDeJoueur()
+	{
 		Scanner sc = new Scanner(System.in);
 		String nbjoueur = "";
 		System.out.println("Combien de joueur vont jouer ?");
@@ -36,7 +39,8 @@ public class IHM {
 		return Integer.valueOf(nbjoueur);
 	}
 
-	public String nomFichier() {
+	public String nomFichier() 
+	{
 		System.out.println("Entrer le nom du fichier de sauvegarde");
 		Scanner sc = new Scanner(System.in);
 		return sc.nextLine();
@@ -46,13 +50,13 @@ public class IHM {
 	public char choix() 
 	{
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Que voulais vous faire");
+		System.out.println("Que voulez-vous faire ?");
 		System.out.println("[A] Acheter un etablissement");
 		System.out.println("[M] Acheter un monument");
 		System.out.println("[B] Afficher la banque");
-		System.out.println("[R] Relancer les dé");
+		System.out.println("[R] Relancer les dés");
 		System.out.println("[P] Passer");
-		if(Controleur.DEBUG)System.out.println("[Z] DEBUG donner 30 piece");
+		if(Controleur.DEBUG)System.out.println("[Z] DEBUG donner 30 pieces");
 		return sc.next().charAt(0);
 	}
 
@@ -61,7 +65,7 @@ public class IHM {
 	{
 		Scanner sc = new Scanner(System.in);
 		char choix;
-		System.out.println("Combien de dé voulais vous lancer");
+		System.out.println("Combien de dé voulez vous lancer");
 		do {
 			System.out.println("[1] ou [2]");
 			choix = sc.next().charAt(0);
@@ -71,19 +75,22 @@ public class IHM {
 	}
 
 	// affiche et renvois le nom du joueur a crée
-	public String creeJoueur() {
+	public String creeJoueur() 
+	{
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Entrer nom du joueur : ");
 		return sc.nextLine();
 	}
 
 	// affiche et verifie le joueur qui commenceras dans le jeu
-	public String commence() {
+	public String commence() 
+	{
 		Scanner sc = new Scanner(System.in);
 		String joueur = "";
 		System.out.println("Entrer nom du joueur qui commence");
 		joueur = sc.nextLine();
-		while (this.ctrl.getMetier().rechercherJoueur(joueur) == null) {
+		while (this.ctrl.getMetier().rechercherJoueur(joueur) == null) 
+		{
 			System.out.println("Erreur le joueur " + joueur + " n'existe pas");
 			joueur = sc.nextLine();
 		}
@@ -93,43 +100,50 @@ public class IHM {
 	// ----------------------------------------------------------------------------------------------------------------
 	// GERE LES ACHATS
 	// affiche le choix de carte a acheter
-	public String achatEtablissement() {
+	public String achatEtablissement() 
+	{
 		boolean inconnue = true;
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Quelle etablissement souhaiter vous acheter ?");
 		String nomCarte = sc.nextLine();
 
-		for (EnumCarte carte : EnumCarte.values()) {
+		for (EnumCarte carte : EnumCarte.values()) 
+		{
 			if (carte.getNom().equals(nomCarte))
 				inconnue = false;
 		}
 
-		if (inconnue) {
+		if (inconnue) 
+		{
 			System.out.println("Nom de la carte inconnue");
 			return "";
 		}
 
-		if (!this.ctrl.getBanque().contains(nomCarte)) {
+		if (!this.ctrl.getBanque().contains(nomCarte)) 
+		{
 			System.out.println("Cartes déja toutes achetées");
 			return "";
 		}
 		return nomCarte;
 	}
 
-	public String achatMonument() {
+	public String achatMonument() 
+	{
 		Scanner sc = new Scanner(System.in);
 		String nomMonument = "";
 		System.out.println("Quelle monuments souhaiter vous acheter ?");
 		System.out.println("[G] Gare");
 		System.out.println("[C] Centre commercial");
-		System.out.println("[P] Parc d'atraction");
+		System.out.println("[P] Parc d'attraction");
 		System.out.println("[T] Tour radio");
 		char choix = sc.next().charAt(0);
-		if (choix != 'G' && choix != 'C' && choix != 'P' && choix != 'T') {
+		if (choix != 'G' && choix != 'C' && choix != 'P' && choix != 'T') 
+		{
 			System.out.println("erreur de choix");
 			return "";
 		}
-		switch (choix) {
+		switch (choix) 
+		{
 		case 'G':
 			nomMonument = "gare";
 			break;
@@ -137,7 +151,7 @@ public class IHM {
 			nomMonument = "centre commercial";
 			break;
 		case 'P':
-			nomMonument = "parc d'atraction";
+			nomMonument = "parc d'attraction";
 			break;
 		case 'T':
 			nomMonument = "tour de radio";
@@ -148,19 +162,21 @@ public class IHM {
 	}
 
 	// en cas d'achat valide
-	public void achatValide(Joueur joueur, Carte carte) {
+	public void achatValide(Joueur joueur, Carte carte)
+	{
 		String l = "+---------------+--------------------+------+\n";
 		String s = "+-------------------------------------------+\n";
 		s += "|" + StringUtils.center("Achat", 43) + "|" + "\n";
 		s += l;
-		s += String.format("|%-15s|%-20s|%5d€|", joueur.getNom(), carte.getNom(), carte.getCout()) + "\n";
+		s += String.format("|%-15s|%-20s|%5d$|", joueur.getNom(), carte.getNom(), carte.getCout()) + "\n";
 		s += l;
 
 		System.out.println(s);
 	}
 
 	// en cas d'erreur
-	public void achatErreur() {
+	public void achatErreur() 
+	{
 
 		String l = "+-------------------------------------------+\n";
 		String s = l;
@@ -171,7 +187,8 @@ public class IHM {
 		System.out.println(s);
 	}
 
-	public void achatMonumentErreur() {
+	public void achatMonumentErreur() 
+	{
 		String l = "+-------------------------------------------+\n";
 		String s = l;
 		s += "|" + StringUtils.center("Erreur Construction", 43) + "|" + "\n";
@@ -182,31 +199,33 @@ public class IHM {
 	}
 	public void achatVioletErreur()
 	{
-		System.out.println("Vous posseder deja cette carte");
+		System.out.println("Vous possédez déjà cette carte.");
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
 	// GERE LES CARTES
 	// affiche leffet d'une carte quand activer
-	public void effetCarte(String nomJoueur, String nomCarte, int piece) {
+	public void effetCarte(String nomJoueur, String nomCarte, int piece) 
+	{
 		String l = "+---------------+--------------------+------+\n";
 		String s = "+-------------------------------------------+\n";
 		s += "|" + StringUtils.center("Effect Obtennue", 43) + "|" + "\n";
 		s += l;
-		s += String.format("|%-15s|%-20s|%5d€|", nomJoueur, nomCarte, piece) + "\n";
+		s += String.format("|%-15s|%-20s|%5d$|", nomJoueur, nomCarte, piece) + "\n";
 		s += l;
 
 		System.out.println(s);
 	}
 
-	public void effetCartePaimment(String joueurActif, String joueurProprietaire, String nomCarte, int nbPiece) {
+	public void effetCartePaimment(String joueurActif, String joueurProprietaire, String nomCarte, int nbPiece) 
+	{
 		String l = "+---------------+--------------------+-------+----------------+\n";
 		String s = "+-------------------------------------------------------------+\n";
 		s += "|" + StringUtils.center("Effect Subie", 61) + "|" + "\n";
 		s += l;
 		s += String.format("|%-15s|%-20s|%7s|%16s|", "Joueur Perdant", "nomCarte", "nbPiece", "joueur Gagnant") + "\n";
 		s += l;
-		s += String.format("|%-15s|%-20s|%6d€|->%14s|", joueurActif, nomCarte, nbPiece, joueurProprietaire) + "\n";
+		s += String.format("|%-15s|%-20s|%6d$|->%14s|", joueurActif, nomCarte, nbPiece, joueurProprietaire) + "\n";
 		s += l;
 
 		System.out.println(s);
@@ -220,41 +239,47 @@ public class IHM {
 		System.out.println("Le joueur : " + joueur.getNom() +"a fait un double , il rejoue");
 	}
 	// affiche une erreur dans le lancer de de
-	public void gagner(Joueur joueur) {
+	public void gagner(Joueur joueur) 
+	{
 		System.out.println("Le joueur : " + joueur.getNom() + " a ganer . BRAVO !!!");
 	}
 
-	public void erreurLanceDe() {
-		System.out.println("Vous n'avais pas la tour radio ou avais deja lancer vos deux ce tour si");
+	public void erreurLanceDe() 
+	{
+		System.out.println("Vous n'aviez pas la tour radio ou aviez déjà lancer vos deux dé durant ce tour.");
 	}
 
 	// affiche le jet de dé obtenue
-	public void jetDe(Joueur joueur) {
+	public void jetDe(Joueur joueur) 
+	{
 		System.out.println("1er de --> "+ joueur.getDe(0) + (joueur.getDe(1) > 0 ? "  2eme de --> : " + joueur.getDe(1) : ""));
 		System.out.println("\njet de dé : " + joueur.getSommeDe() + "");
 	}
 
 	// affiche une transition au debut du tour d'un joueur
-	public void transition(Joueur joueur) {
-		System.out.println(
-				"-------------------------------------------------------------------------------------------------------");
+	public void transition(Joueur joueur) 
+	{
+		System.out.println("____________________________________________________________________________________________________");
 		System.out.println("A " + joueur.getNom() + " DE JOUER");
 
 	}
 
 	// affiche l'etat general des joueurs
-	public void afficherEtat() {
+	public void afficherEtat() 
+	{
 		System.out.println("__________________________________________");
 		afficherBanque();
 
-		for (Joueur j : this.ctrl.getMetier().getJoueurs()) {
+		for (Joueur j : this.ctrl.getMetier().getJoueurs()) 
+		{
 			afficherEtatJoueur(j);
 		}
 		System.out.println("__________________________________________");
 	}
 
 	// affiche le contenue de la banque actuelle
-	public void afficherBanque() {
+	public void afficherBanque() 
+	{
 		String s = "";
 		String l = "+-----+--------------------+------+----+\n";
 		EnumCarte[] tabEnum = EnumCarte.values();
@@ -266,18 +291,20 @@ public class IHM {
 		s += "+--------------------------------------+\n";
 		s += "|" + StringUtils.center("Banque", 38) + "|\n";
 		s += l;
-		for (int i = 0; i < nbTypeCarte; i++) {
+		for (int i = 0; i < nbTypeCarte; i++) 
+		{
 			String tmp = "";
 			int cpt = 0;
 			tmp += String.format("|%-5s", tabEnum[i].getDeclencheur());
 			tmp += String.format("|%-20s|", tabEnum[i].getNom());
-			for (Carte carte : cartes) {
+			for (Carte carte : cartes) 
+			{
 
 				if (tabEnum[i].getNom().equals(carte.getNom()))
 					cpt++;
 			}
 			tmp += String.format("%5dx|", cpt);
-			tmp += String.format("%3d€|", tabEnum[i].getCout()) + "\n";
+			tmp += String.format("%3d$|", tabEnum[i].getCout()) + "\n";
 			if (cpt > 0)
 				s += tmp;
 
@@ -287,8 +314,10 @@ public class IHM {
 	}
 
 	// affiche les differente information concernant un joueur
-	public void afficherEtatJoueur(Joueur joueur) {
+	public void afficherEtatJoueur(Joueur joueur) 
+	{
 		ArrayList<Carte> cartes = joueur.getListCartes();
+		Collections.sort(cartes);
 		ArrayList<Monument> ensMonument = new ArrayList<Monument>();
 
 		String s = "";
@@ -298,17 +327,23 @@ public class IHM {
 		s += "|" + StringUtils.center(joueur.getNom(), 33) + "|\n";
 		s += l;
 
-		while (!cartes.isEmpty()) {
+		while (!cartes.isEmpty()) 
+		{
 			Carte carte = cartes.get(0);
-			int cpt = 0;
+			int cpt = 1;
 
-			if (carte instanceof Monument) {
+			if (carte instanceof Monument) 
+			{
 				ensMonument.add((Monument) carte);
 				cartes.remove(carte);
-			} else {
+			} 
+			else 
+			{
 
-				for (int i = 0; i < cartes.size(); i++) {
-					if (carte.getNom().equals(cartes.get(i).getNom())) {
+				for (int i = 0; i < cartes.size(); i++) 
+				{
+					if (carte != cartes.get(i) && carte.getNom().equals(cartes.get(i).getNom())) 
+					{
 						cpt++;
 						cartes.remove(i);
 					}
@@ -316,14 +351,16 @@ public class IHM {
 				s += String.format("|%-5s", carte.getDeclencheur());
 				s += String.format("|%-20s|", carte.getNom());
 				s += String.format("%5dx|", cpt) + "\n";
+				cartes.remove(carte);
 			}
 		}
 		s += l;
 
-		for (Monument monument : ensMonument) {
+		for (Monument monument : ensMonument) 
+		{
 			s += String.format("|%-5s", monument.getIsBuild() ? "Oui" : "Non");
 			s += String.format("|%-20s|", monument.getNom());
-			s += String.format("%5s€|", monument.getCout()) + "\n";
+			s += String.format("%5s$|", monument.getCout()) + "\n";
 
 		}
 		s += l;
@@ -341,29 +378,34 @@ public class IHM {
 	public int debugJetDe()
 	{
 		Scanner sc = new Scanner(System.in);
-		System.out.println("DEBUG : choisir le jet de dé");
+		System.out.print("DEBUG : choisir le jet de dé :");
 		return sc.nextInt();
 	}
 
 
 	// choisit un joueur
-	public String choisitUnJoueur() {
+	public String choisitUnJoueur() 
+	{
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Choisir un Joueur");
 		return sc.nextLine();
 	}
-	public void erreurSaisrNomJoueur() {
+	public void erreurSaisrNomJoueur() 
+	{
 		System.out.println("Saisir un nom correct");
 	}
-	public String choisitUnCarte() {
+	public String choisitUnCarte() 
+	{
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Choisir un Carte");
+		System.out.println("Choisir une Carte");
 		return sc.nextLine();
 	}
-	public void erreurSaisrNomCarte() {
+	public void erreurSaisrNomCarte() 
+	{
 		System.out.println("Saisir un nom carte");
 	}
-	public void donnerLeCarte(Joueur joueur) {
-		System.out.println("Choisir un Carte et donner à" + joueur.getNom());
+	public void donnerLeCarte(Joueur joueur) 
+	{
+		System.out.println("Choisir un Carte et donner à " + joueur.getNom());
 	}
 }

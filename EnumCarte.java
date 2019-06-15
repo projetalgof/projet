@@ -16,7 +16,7 @@ public enum EnumCarte
 	verger(         "10"    ,"verger"             ,"grain"      ,3,"bleu"     ,3,null),
 	gare(           ""      ,"gare"               ,"monument"   ,0,"monument" ,4,null),
 	centreCom(      ""      ,"centre commercial"  ,"monument"   ,0,"monument" ,10,null),
-	parcAtraction(  ""      ,"parc d'atraction"   ,"monument"   ,0,"monument" ,16,null),
+	parcAtraction(  ""      ,"parc d'attraction"   ,"monument"   ,0,"monument" ,16,null),
 	tourRadio(      ""      ,"tour de radio"      ,"monument"   ,0,"monument" ,22,null),
 	marcherLegume(  "11-12" ,"marcher au legume"  ,"pomme"      ,2,"vert"     ,2,"grain");
 
