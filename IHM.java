@@ -11,8 +11,7 @@ public class IHM {
 	// ----------------------------------------------------------------------------------------------------------------
 	// GERE LES SCANNERS
 	// affichage du debut de jeu et envois le nombre de joueur choisie
-	public char debut() 
-	{
+	public char debut() {
 		Scanner sc = new Scanner(System.in);
 		char choix;
 		System.out.println("Bonjour est bienvenue sur le jeu MiniVille\n");
@@ -20,25 +19,24 @@ public class IHM {
 		System.out.println("[C] Charger");
 		System.out.println("");
 		do
-			choix=sc.next().charAt(0);
-		while(choix != 'N' && choix != 'C');
+			choix = sc.next().charAt(0);
+		while (choix != 'N' && choix != 'C');
 		return choix;
 	}
-	public int nombreDeJoueur()
-	{
+
+	public int nombreDeJoueur() {
 		Scanner sc = new Scanner(System.in);
 		String nbjoueur = "";
 		System.out.println("Combien de joueur vont jouer ?");
 		nbjoueur = sc.next();
-		while (!Pattern.matches("[2-4]", nbjoueur)) 
-		{
+		while (!Pattern.matches("[2-4]", nbjoueur)) {
 			System.out.println("Le nombre de joueur est entre 2 et 4 ");
 			nbjoueur = sc.next();
 		}
 		return Integer.valueOf(nbjoueur);
 	}
-	public String nomFichier()
-	{
+
+	public String nomFichier() {
 		System.out.println("Entrer le nom du fichier de sauvegarde");
 		Scanner sc = new Scanner(System.in);
 		return sc.nextLine();
@@ -115,35 +113,32 @@ public class IHM {
 		return nomCarte;
 	}
 
-	public String achatMonument() 
-	{
+	public String achatMonument() {
 		Scanner sc = new Scanner(System.in);
 		String nomMonument = "";
 		System.out.println("Quelle monuments souhaiter vous acheter ?");
 		System.out.println("[G] Gare");
 		System.out.println("[C] Centre commercial");
-		System.out.println("[P] Parc d'attraction");
+		System.out.println("[P] Parc d'atraction");
 		System.out.println("[T] Tour radio");
 		char choix = sc.next().charAt(0);
-		if (choix != 'G' && choix != 'C' && choix != 'P' && choix != 'T') 
-		{
+		if (choix != 'G' && choix != 'C' && choix != 'P' && choix != 'T') {
 			System.out.println("erreur de choix");
 			return "";
 		}
-		switch (choix)
-		{
-			case 'G':
-				nomMonument = "gare";
-				break;
-			case 'C':
-				nomMonument = "centre commercial";
-				break;
-			case 'P':
-				nomMonument = "parc d'atraction";
-				break;
-			case 'T':
-				nomMonument = "tour de radio";
-				break;
+		switch (choix) {
+		case 'G':
+			nomMonument = "gare";
+			break;
+		case 'C':
+			nomMonument = "centre commercial";
+			break;
+		case 'P':
+			nomMonument = "parc d'atraction";
+			break;
+		case 'T':
+			nomMonument = "tour de radio";
+			break;
 		}
 
 		return nomMonument;
@@ -151,38 +146,73 @@ public class IHM {
 
 	// en cas d'achat valide
 	public void achatValide(Joueur joueur, Carte carte) {
-		System.out.println("le joueur " + joueur.getNom() + " a acheter la carte : " + carte.getNom() + " pour "
-				+ carte.getCout() + " piece");
+		String l = "+---------------+--------------------+------+\n";
+		String s = "+-------------------------------------------+\n";
+		s += "|" + StringUtils.center("Achat", 43) + "|" + "\n";
+		s += l;
+		s += String.format("|%-15s|%-20s|%5d€|", joueur.getNom(), carte.getNom(), carte.getCout()) + "\n";
+		s += l;
+
+		System.out.println(s);
 	}
 
 	// en cas d'erreur
 	public void achatErreur() {
-		System.out.println("Vous ne disposer pas sufisament de piece");
+
+		String l = "+-------------------------------------------+\n";
+		String s = l;
+		s += "|" + StringUtils.center("Erreur Achat", 43) + "|" + "\n";
+		s += l;
+		s += "|" + StringUtils.center("Nombre de pieces insuffisante", 43) + "|" + "\n";
+		s += l;
+		System.out.println(s);
 	}
 
 	public void achatMonumentErreur() {
-		System.out.println("Le monument choisi est deja construis");
+		String l = "+-------------------------------------------+\n";
+		String s = l;
+		s += "|" + StringUtils.center("Erreur Construction", 43) + "|" + "\n";
+		s += l;
+		s += "|" + StringUtils.center("Le monument choisi est deja construis", 43) + "|" + "\n";
+		s += l;
+		System.out.println(s);
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
 	// GERE LES CARTES
 	// affiche leffet d'une carte quand activer
 	public void effetCarte(String nomJoueur, String nomCarte, int piece) {
-		System.out.println(nomJoueur + " carte : " + nomCarte + " gain de piece : " + piece);
+		String l = "+---------------+--------------------+------+\n";
+		String s = "+-------------------------------------------+\n";
+		s += "|" + StringUtils.center("Effect Obtennue", 43) + "|" + "\n";
+		s += l;
+		s += String.format("|%-15s|%-20s|%5d€|", nomJoueur, nomCarte, piece) + "\n";
+		s += l;
+
+		System.out.println(s);
 	}
 
 	public void effetCartePaimment(String joueurActif, String joueurProprietaire, String nomCarte, int nbPiece) {
-		System.out.println(
-				joueurActif + " à payer a : " + joueurProprietaire + " : " + nbPiece + " piece pour " + nomCarte);
+		String l = "+---------------+--------------------+-------+----------------+\n";
+		String s = "+-------------------------------------------------------------+\n";
+		s += "|" + StringUtils.center("Effect Subie", 61) + "|" + "\n";
+		s += l;
+		s += String.format("|%-15s|%-20s|%7s|%16s|", "Joueur Perdant", "nomCarte", "nbPiece", "joueur Gagnant") + "\n";
+		s += l;
+		s += String.format("|%-15s|%-20s|%6d€|->%14s|", joueurActif, nomCarte, nbPiece, joueurProprietaire) + "\n";
+		s += l;
+
+		System.out.println(s);
+
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
 	// GERE LES AFFICHAGE BRUT
 	// affiche une erreur dans le lancer de de
-	public void gagner(Joueur joueur)
-	{
-		System.out.println("Le joueur : "+joueur.getNom()+" a ganer . BRAVO !!!");
+	public void gagner(Joueur joueur) {
+		System.out.println("Le joueur : " + joueur.getNom() + " a ganer . BRAVO !!!");
 	}
+
 	public void erreurLanceDe() {
 		System.out.println("Vous n'avais pas la tour radio ou avais deja lancer vos deux ce tour si");
 	}
@@ -281,7 +311,7 @@ public class IHM {
 		for (Monument monument : ensMonument) {
 			s += String.format("|%-5s", monument.getIsBuild() ? "Oui" : "Non");
 			s += String.format("|%-20s|", monument.getNom());
-			s += String.format("%6s|", "") + "\n";
+			s += String.format("%5s€|", monument.getCout()) + "\n";
 
 		}
 		s += l;
@@ -294,4 +324,32 @@ public class IHM {
 
 		System.out.println(s);
 	}
+
+	/*// --------------------------------------------------violet
+	// choisit un joueur
+	public String choisitUnJoueur() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Choisir un Joueur");
+
+		return sc.nextLine();
+	}
+
+	public void erreurSaisrNomJoueur() {
+		System.out.println("Saisir un nom correct");
+	}
+
+	public String choisitUnCarte() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Choisir un Carte");
+
+		return sc.nextLine();
+	}
+
+	public void erreurSaisrNomCarte() {
+		System.out.println("Saisir un nom carte");
+	}
+
+	public void donnerLeCarte(Joueur joueur) {
+		System.out.println("Choisir un Carte et donner à" + joueur.getNom());
+	}*/
 }
