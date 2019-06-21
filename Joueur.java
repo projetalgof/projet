@@ -1,182 +1,205 @@
 import java.util.ArrayList;
 
-public class Joueur 
-{
-	private static int[] jetDe;
-	private static int   sommeDe;
-	private static int   nbJoueur;
+public class Joueur implements Comparable<Joueur> {
 
-	private String  nom;
-	private int     numJoueur;
-	private int     piece;
-	private boolean aAcheter ; //assure que l'on peu effectuer un seul achat a la fois
-	private boolean deuxJet ; //assure que l'on puisse rejeter les de qu'une fois
-	// liste de carte posseder par le joueur
-	private ArrayList<Carte> listCartes;
+	// Les ID du tableau ordresString correspond aux ID du tableau
+	// ORDRES_STRING. Il a y donc 2 Avancer, 1 AvancerX2 etc...
+	private static final int[] ORDRES_MAX = { 2, 1, 3, 3, 2, 2, 2 };
 
-	public Joueur(String nom) 
-	{
-		if(this.jetDe == null) this.jetDe = new int[2];
-		this.nom        = nom;
-		this.listCartes = new ArrayList<Carte>();
-		this.numJoueur  = Joueur.nbJoueur++;
+	public static final String[] ORDRES_STRING = { "Avancer", "AvancerX2", "TournerSensAntiHoraire",
+			"TournerSensHoraire", "Charger", "Deposer", "Zap" };
+
+	private static final String[] COULEURS = { "Rouge", "Jaune", "Vert", "Bleu", "Violet", "Rose" };
+
+	private int identifiant;
+	private int points;
+	// private boolean jokerDouble;
+	private boolean hasModifieProg;
+	private Base base;
+	private ArrayList<Robot> alRobot;
+	private ArrayList<Ordre> alOrdre;
+
+	private String couleur;
+
+	public Joueur(int identifiant) {
+		this.identifiant = identifiant;
+		this.points = 0;
+		this.hasModifieProg = false;
+		this.alRobot = new ArrayList<Robot>();
+		this.alOrdre = new ArrayList<Ordre>();
+		this.couleur = Joueur.COULEURS[this.identifiant - 1];
+
+		this.initOrdres();
 	}
-	//active les action de carte qui raporte des piece de la banque
-	public void gain(Joueur joueurActif,Controleur ctrl) 
-	{
-		for(Carte carte : this.listCartes) 
-		{
-			if( !(carte instanceof CarteRouge) && !(carte instanceof Monument))
-			{
-				if ((carte.getDeclencheur().indexOf((Joueur.sommeDe + ""))) >= 0) carte.action(this,joueurActif,ctrl);
+
+	public String getCouleur() {
+		return this.couleur;
+	}
+
+	/**
+	 * Phase d'ajout de l'ordre. On retire un ordre et le place sur le robot si
+	 * possible. Si un ordre était déjà présent à l'emplacement indiqué, on redonne
+	 * la tuile ordre qui était initialement implémentée sur le robot au joueur.
+	 * Retourne true Sinon, retourne false;
+	 */
+	public boolean ajouterOrdre(int idRobot, String ordre, int idOrdre) {
+		// Phase d'ajout de l'ordre
+		for (Ordre o : alOrdre) {
+			if (o.getClass().getName().equals(ordre)) {
+				Ordre ordreRetour = this.alRobot.get(idRobot).setOrdre(idOrdre, o);
+				alOrdre.remove(o);
+
+				// On remet la tuile ordre au joueur s'il y en avait une dans le robot
+				if (ordreRetour != null)
+					alOrdre.add(ordreRetour);
+
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Permute deux tuiles d'ordre sur un robot s'il en existe au moins une sur les
+	 * deux positions données et que les deux positions sont différentes, retourne true
+	 * Sinon, return false
+	 */
+	public boolean permuterOrdre(int idRobot, int idOrdre1, int idOrdre2) {
+		Ordre ordre1Temp = this.alRobot.get(idRobot).getOrdre(idOrdre1);
+		Ordre ordre2Temp = this.alRobot.get(idRobot).getOrdre(idOrdre2);
+		if ((ordre1Temp != null || ordre2Temp != null) &&
+		     idOrdre1 != idOrdre2) {
+			this.alRobot.get(idRobot).setOrdre(idOrdre1, ordre2Temp);
+			this.alRobot.get(idRobot).setOrdre(idOrdre2, ordre1Temp);
+			return true;
+		} else
+			return false;
+	}
+
+	/**
+	 * Active la méthode retirerOrdre de Robot, et récupère un String Si celui-ci
+	 * n'est pas null, il augmente son nombre d'ordres correspondant Retourne true
+	 * Sinon, ne fait rien et retourne false
+	 */
+	public boolean retirerOrdre(int idRobot, int idOrdre) {
+		Ordre ordreTemp = this.alRobot.get(idRobot).retirerOrdre(idOrdre);
+		if (ordreTemp != null) {
+			alOrdre.add(ordreTemp);
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Retire toutes les tuiles ordres du robot, et les replace dans le stock de
+	 * tuiles du joueur. Return true s'il y avait au moins une tuile présente dans
+	 * le robot. Return false sinon
+	 */
+	public boolean redemarrer(int idRobot) {
+		Boolean aRedemarre = false;
+
+		for (Ordre o : this.alRobot.get(idRobot).redemarrer()) {
+			if (o != null) {
+				alOrdre.add(o);
+				aRedemarre = true;
+			}
+		}
+		return aRedemarre;
+	}
+
+	public void initOrdres() {
+		String s;
+		for (int i = 0; i < Joueur.ORDRES_MAX.length; i++) {
+			for (int j = 0; j < Joueur.ORDRES_MAX[i]; j++) {
+				s = Joueur.ORDRES_STRING[i];
+				switch (s) {
+				case "Avancer":
+					this.alOrdre.add(new Avancer());
+					break;
+
+				case "AvancerX2":
+					this.alOrdre.add(new AvancerX2());
+					break;
+
+				case "TournerSensAntiHoraire":
+					this.alOrdre.add(new TournerSensAntiHoraire());
+					break;
+
+				case "TournerSensHoraire":
+					this.alOrdre.add(new TournerSensHoraire());
+					break;
+
+				case "Charger":
+					this.alOrdre.add(new Charger());
+					break;
+
+				case "Deposer":
+					this.alOrdre.add(new Deposer());
+					break;
+
+				case "Zap":
+					this.alOrdre.add(new Zap());
+					break;
+				}
 			}
 		}
 	}
-	//active les action de carte qui rapporte des piece des autre joueur
-	public void payer(Joueur joueurActif,Controleur ctrl)
-	{
-		for(Carte carte : this.listCartes) 
-		{
-			if(carte instanceof CarteRouge  && !(carte instanceof Monument))
-			{
-				if ((carte.getDeclencheur().indexOf((Joueur.sommeDe + ""))) >= 0)  carte.action(this,joueurActif,ctrl);
-			}
-		}
-	}
-	//jet un nombre de dé
-	public void jetDe(int nbDe) 
-	{
-		int resultat = 0;
-		this.jetDe[0] = this.jetDe[1] = 0;
-		for (int i = 0; i < nbDe; i++)
-		{
-			this.jetDe[i] = (int)(Math.random() * 6 + 1);
-			resultat += this.jetDe[i];
-		}
-		this.sommeDe=resultat;
-	}
-	//verifie si le dernier joueur a fait un double
-	public boolean estUnDouble()
-	{
-		return this.jetDe[0]== this.jetDe[1] ; 
-	}
-	//ajoute une carte au joueur
-	public void ajouterCarte(Carte carte) 
-	{
-		this.listCartes.add(carte);
-	}
-	public boolean aGagner()
-	{
-		boolean gagner ; 
-		for(Carte carte : this.listCartes)
-		{
-			if(carte instanceof Monument && !((Monument)carte).getIsBuild())
-				return false ;
-		}
-		return true ;
 
-	}
-	//verifie si la carte est present
-	public boolean contains(String nom)
-	{
-    	for(Carte carte : this.listCartes)
-    	{
-    		if (carte.getNom().equals(nom)) return true ;
-    	}
-    	return false ; 
+	public void setBase(Base base) {
+		this.base = base;
 	}
 
-	//----------------------------------------------------------------------------------------------------------------
-	//                                             GERE LES MONUMENTS
-	//verifie si le monument donner est actif
-	public boolean monumentActif(String nom)
-	{
-		for(Carte carte : this.listCartes)
-		{
-			if(carte instanceof Monument && carte.getNom().equals(nom))
-				return ((Monument)carte).getIsBuild();
-		}
-		return false; 
+	// Méthode appelée une seule fois, lors de l'initialisation
+	// de la partie.
+	public void addRobot(Robot r) {
+		this.alRobot.add(r);
 	}
-	//active le monument donne
-	public void activeMonument(String nom)
-	{
-		for(Carte carte : this.listCartes)
-		{
-			if(carte instanceof Monument && carte.getNom().equals(nom))
-			{
-				((Monument)carte).setIsBuild(true);
-				break;
-			}
-		}
-	}
-	//----------------------------------------------------------------------------------------------------------------
-	//                                             GET
-	public String     getNom       ()       { return this.nom;      }
-	public boolean    getAcheter   ()       { return this.aAcheter; }
-	public boolean    getDeuxJet   ()       { return this.deuxJet;  }
-	public int        getSommeDe   ()       { return this.sommeDe ; }
-	public int        getPiece     ()       { return this.piece;    }
-	public int        getNum       ()       { return this.numJoueur;}
-	public int        getDe        (int de) { return this.jetDe[de];}
 
-	//retourne une copie profonde de la list de carte
-	public ArrayList<Carte> getListCartes() 
-	{
-		ArrayList<Carte> tmp = new ArrayList<Carte>();
-		for (Carte carte : this.listCartes) 
-		{
-			tmp.add(carte);
+	public void gagnePoint(int points) {
+		this.points += points;
+	}
+
+	public int calculerPoints() {
+		int ptsTotaux = this.points;
+		for (Robot r : alRobot) {
+			if (r.getCristal() != null)
+				ptsTotaux += r.getCristal().getValeur();
 		}
-		return tmp;
+		return ptsTotaux;
 	}
-	//retourne le nombre de carte d'un mem type
-	public int getNbCarte(String type)
-	{
-		int i = 0 ;
-		for (Carte carte : this.listCartes)
-		{
-			if(carte.getType().equals(type)) i++ ;
+
+	public int getId() {
+		return this.identifiant;
+	}
+
+	public ArrayList<Robot> getRobots() {
+		return this.alRobot;
+	}
+
+	// Ne tient pas compte des robots qui possède un cristal
+	public int getPoints() {
+		return this.points;
+	}
+
+	public int getTypeCristaux() {
+		return this.base.calculerTypeCristaux();
+	}
+
+	public int getPointsParCristaux(int valeur) {
+		int points = 0;
+		for (Cristal c : this.base.getCristaux()) {
+			if (c.getValeur() == valeur)
+				points += valeur;
 		}
-		return i ; 
+		return points;
 	}
-	//retourne le monument concerné
-	public Monument getMonument(String nom )
-	{
-		for(Carte carte : this.listCartes)
-		{
-			if(carte instanceof Monument && carte.getNom().equals(nom))
-			{
-				return (Monument)carte ;
-			}
-		}
-		return null ; 
+	public ArrayList<Ordre> getAlOrdre(){
+		return this.alOrdre;
 	}
-	//----------------------------------------------------------------------------------------------------------------
-	//                                             SET
-	//ajoute les piece a piece existente
-	public void setPiece(int piece) 
-	{
-		this.piece += piece;
-	}
-	//en cas d'achat modifie le boolean
-	public void setAcheter(boolean b)
-	{
-		this.aAcheter=b;
-	}
-	//en cas de 2eme jet
-	public void setDeuxJet(boolean b)
-	{
-		this.deuxJet=b;
-	}
-	//modifie le jet de de DEBUG
-	public void setJetDe(int a,int b)
-	{
-		if(Controleur.DEBUG)
-		{
-			this.jetDe[0]   = a ;
-			this.jetDe[1]   = b ;
-			this.sommeDe = a + b ;
-		}
+
+	// Négatif = moins de points que l'autreJoueur
+	// Positif = plus de points que l'autreJoueur
+	public int compareTo(Joueur autreJoueur) {
+		return this.calculerPoints() - autreJoueur.calculerPoints();
 	}
 }
